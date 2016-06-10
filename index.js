@@ -40,7 +40,7 @@ livePieceOnBoard = 0;
 var livePieceShape;
 var position1v = [];
 var livePieceTime;
-var livePieceAlignment;
+var livePieceRotation;
 
 
 var h1;
@@ -53,9 +53,9 @@ var h4;
 var v4;
 
 
-var setUpGrid = function() {
+var setGridtoZero = function() {
 
-	for (xAxis = 0; xAxis < 10; xAxis++) {  // Gives everything in array a value of 0
+	for (xAxis = 0; xAxis < 10; xAxis++) {  // adds 0 to arrays
 		var arraySet0 = [];
 		for (yAxis = 0; yAxis < 22; yAxis++) {
 
@@ -73,13 +73,13 @@ var fillOutGrid = function() {
 	for (var xAxis = 0; xAxis < 10; xAxis++) {
 		for (var yAxis = 0; yAxis < 22; yAxis++) { // xAxis === x , yAxis === y
 			
-			var toAddChild = document.createElement("div" + xAxis);
+			var toAddChild = document.createElement("div" + xAxis); //creates all the divs, givs classes and IDs
 			toAddChild.id = "cell x"+ xAxis + ", y" + yAxis;
 			toAddChild.className = "trial1";
 			toAddChild.style.left = xAxis*21 + 'px';
 			toAddChild.style.top = yAxis*21 + 'px';
 			
-			if (arraySet1[xAxis][yAxis] === 1) {
+			if (arraySet1[xAxis][yAxis] === 1) { //sets up secondary class (for active cells)
 				toAddChild.className = "trial2";
 
 			} else if (arraySet1[xAxis][yAxis] === 2){
@@ -100,19 +100,19 @@ var fillOutGrid = function() {
 var theBeat = function() {
 	
 	if (beat < 14) { // NOTE: put in here for it to happen every 0.1 secs
-		
-		subBeat += 0.1;
-		// console.log(gameTime);
-		gameTime = [beat, subBeat];
 
 		if (livePieceShape === "L") {
 			shapeL();
 		}
+		
+		// getRotation();
+
+		// arraySet1[h1][v1] = 0; //top
+		// arraySet1[h2][v2] = 0; //second from top
+		// arraySet1[h3][v3] = 0; //bottom
+		// arraySet1[h4][v4] = 0; //bottom right
+
 		fillOutGrid();
-
-		if (subBeat >= 1) { //NOTE: put it in here for it to happen every second
-
-			// document.getElementById("timer").innerHTML = "Game time = " + gameTime;
 
 			vert = livePieceTime;
 			beat++;
@@ -124,13 +124,17 @@ var theBeat = function() {
 			}
 			
 			livePieceTime++
+			
+// if (subBeat >= 1) { //NOTE: put it in here for it to happen every second
+
+			// document.getElementById("timer").innerHTML = "Game time = " + gameTime;
 			// console.log("theBeat, gameTime = " + gameTime);
-		}		
+		// }		
 	} 		
 }
 
 var start = function() {
-	setUpGrid();
+	setGridtoZero();
 	var interval = setInterval(function(){theBeat();}, 1000);
 }
 
@@ -141,7 +145,7 @@ var randomShapeGenerator = function() {
 	var arrivalTime = gameTime;
 	livePieceShape = "L"; //NOTE: just for now, will be generated randomly later
 	
-	livePieceAlignment = 1;
+	livePieceRotation = 1;
 
 	//TASK: assign each shape a number, generate random number, match number to shape, display shape
 	//TASK: Generate new shape before previous one lands, for preview window
@@ -149,7 +153,7 @@ var randomShapeGenerator = function() {
 }
 
 var shapeL = function() {
-	getAlignment();
+	getRotation();
 
 	// h1 = horiz;
 	// v1 = vert;
@@ -159,18 +163,28 @@ var shapeL = function() {
 	// v3 = vert+2;
 	// h4 = horiz+1;
 	// v4 = vert+2;
-	
-	if (subBeat < 1) {
-		arraySet1[h1][v1] = 1; //top
-		arraySet1[h2][v2] = 1; //second from top
-		arraySet1[h3][v3] = 1; //bottom
-		arraySet1[h4][v4] = 1;//bottom right
-	} else {
-		arraySet1[h1][v1] = 0; //top
-		arraySet1[h2][v2] = 0; //second from top
-		arraySet1[h3][v3] = 0; //bottom
-		arraySet1[h4][v4] = 0; //bottom right
-	}
+
+	setGridtoZero();
+		
+		if (livePieceRotation = 1) { //where objects get moved down
+
+			arraySet1[h1][v1] = 1; //top
+			arraySet1[h2][v2] = 1; //second from top
+			arraySet1[h3][v3] = 1; //bottom
+			arraySet1[h4][v4] = 1;//bottom right
+
+			
+			arraySet1[h1][v1-1] = 0; //top-1
+			arraySet1[h4][v4-1] = 0; //bottom right-1
+
+		} else if  (livePieceRotation = 2) {
+
+		} else if  (livePieceRotation = 3) {
+
+		} else if  (livePieceRotation = 4) {
+
+		}
+
 }
 
 
@@ -187,7 +201,15 @@ document.onkeydown = function(checkKeyPressed){
 
 var goLeft = function() {
 	
-	getAlignment();
+	for (var xAxis = 0; xAxis < 10; xAxis++) { //sets all cells to 0;
+		for (var yAxis = 0; yAxis < 22; yAxis++) { // xAxis === x , yAxis === y
+			if (arraySet1[xAxis][yAxis] === 1) {
+				arraySet1[xAxis][yAxis] = 0;
+			}
+		}
+	}
+
+	getRotation();
 
 	// if (livePieceShape === "L") {
 	// 	var h1 = horiz;
@@ -227,7 +249,15 @@ var goLeft = function() {
 
 var goRight = function() {
 	
-	getAlignment();
+	for (var xAxis = 0; xAxis < 10; xAxis++) { //sets all cells to 0;
+		for (var yAxis = 0; yAxis < 22; yAxis++) { // xAxis === x , yAxis === y
+			if (arraySet1[xAxis][yAxis] === 1) {
+				arraySet1[xAxis][yAxis] = 0;
+			}
+		}
+	}
+
+	getRotation();
 	console.log(h1);
 
 	if (horiz <= 9) {
@@ -241,7 +271,11 @@ var goRight = function() {
 		arraySet1[h1+1][v1] = 1;
 		arraySet1[h2+1][v2] = 1;
 		arraySet1[h3+1][v3] = 1;
-		arraySet1[h4+1][v4] = 1;		
+		arraySet1[h4+1][v4] = 1;
+
+		setTimeout(function(){
+		
+		}, 3000);		
 
 
 		// setInterval(function(){arraySet1[h1][v1] = 0;}, 100);
@@ -256,17 +290,17 @@ var goRight = function() {
 	}
 }
 
-var CCW = function() {
+var CCW = function() { //rotate counter clockwise
 	
 	console.log("CCW");
 
-	if (livePieceAlignment === 0){
-		livePieceAlignment = 4;
+	if (livePieceRotation === 0){
+		livePieceRotation = 4;
 	} else {
-		livePieceAlignment--;
+		livePieceRotation--;
 	}
 
-	console.log("livePieceAlignment = " + livePieceAlignment);
+	console.log("livePieceRotation = " + livePieceRotation);
 
 	// arraySet1[h1][v1] = 0;
 	// arraySet1[h2][v2] = 0;
@@ -276,12 +310,12 @@ var CCW = function() {
 	fillOutGrid();
 }
 
-var getAlignment = function() {
-	// console.log("Getting Alignment...");
+var getRotation = function() { //rotation
+	// console.log("Getting Rotation...");
 
 	if (livePieceShape === "L") {
-		if (livePieceAlignment === 1) {
-			console.log("Alignment1");
+		if (livePieceRotation === 1) {
+			console.log("Rotation1");
 			h1 = horiz;
 			v1 = vert;
 			h2 = horiz;
@@ -290,8 +324,8 @@ var getAlignment = function() {
 			v3 = vert+2;
 			h4 = horiz+1;
 			v4 = vert+2;
-		} else if (livePieceAlignment === 2) {
-			console.log("Alignment2");
+		} else if (livePieceRotation === 2) {
+			console.log("Rotation2");
 			h1 = horiz-1;
 			v1 = vert-1;
 			h2 = horiz;
@@ -300,8 +334,8 @@ var getAlignment = function() {
 			v3 = vert;
 			h4 = horiz+1;
 			v4 = vert;
-		} else if (livePieceAlignment === 3) {
-			console.log("Alignment3");
+		} else if (livePieceRotation === 3) {
+			console.log("Rotation3");
 			h1 = horiz-1;
 			v1 = vert-1;
 			h2 = horiz;
@@ -310,8 +344,8 @@ var getAlignment = function() {
 			v3 = vert;
 			h4 = horiz+1;
 			v4 = vert;
-		} else if (livePieceAlignment === 4) {
-			console.log("Alignment4");
+		} else if (livePieceRotation === 4) {
+			console.log("Rotation4");
 			h1 = horiz-1;
 			v1 = vert-1;
 			h2 = horiz;
