@@ -131,7 +131,7 @@ var theBeat = function() {
 
 var start = function() {
 	setUpGrid();
-	var interval = setInterval(function(){theBeat();}, 100);
+	var interval = setInterval(function(){theBeat();}, 1000);
 }
 
 var randomShapeGenerator = function() {
