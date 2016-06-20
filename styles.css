@@ -1,3 +1,18 @@
+/*div, html, body, section, a, #abt_copy_p {
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}*/
+
+body, html {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
 #main_grid {
 	height: 400px;
 	width: 400px;
@@ -11,7 +26,7 @@
 	height: 462px;
 }
 
-.trial1 {
+.empty {
 	/*positive cells*/
 	position: absolute;
 	background-color: red;
@@ -24,7 +39,7 @@
 	border: 10px;
 }
 
-.trial2 {
+.fullCell {
 	/*negative cells*/
 	position: absolute;
 	background-color: purple;
@@ -52,8 +67,8 @@
 	border: 10px;
 }
 
-.trial4 {
-	/*negative cells*/
+.deadCell {
+	/*dead cells*/
 	position: absolute;
 	background-color: gray;
 	height: 19px;
@@ -77,12 +92,31 @@
 
 #instructions {
 	position: absolute;
-	left: 300px;
+	left: 250px;
 	font-family: helvetica;
 	background-color: yellow;
 	height: 190px;
-	width: 250px;
+	width: 200px;
 	/*padding-left: 40px;*/
 	padding-top: 20px;
 	text-align: center;
+}
+
+#pauseCont {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	left: 500px;
+	top: 200px;
+	width: 100px;
+	height: 100px;
+	margin: 0px;
+	z-index: 1;
+}
+
+#pauseBtn {
+	width: 100px;
+	width: 100px;
+	height: 100px;
 }
