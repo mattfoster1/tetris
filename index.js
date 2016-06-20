@@ -17,7 +17,9 @@ var downInterval;
 var downval = 0; //to stop 'down' interval repeating
 var beatTime = 500;
 var condemnedLine;
+var c1;
 
+var deadCellArr = [];
 
 var h1;
 var v1;
@@ -104,6 +106,8 @@ var theBeat = function() {
 				shapeN();
 			} else if (livePieceShape === "sq") {
 				shapeSq();
+			} else if (livePieceShape === "T") {
+				shapeT();
 			}
 		
 			// vert = livePieceTime+1;
@@ -140,7 +144,7 @@ var randomShapeGenerator = function() {
 	
 	var arrivalTime = gameTime;
 
-	var randomNo = Math.floor(Math.random()*4);
+	var randomNo = Math.floor(Math.random()*5);
 	if (randomNo == 0) {
 		// livePieceShape = "L";
 	} else if (randomNo == 1) {
@@ -149,11 +153,13 @@ var randomShapeGenerator = function() {
 		// livePieceShape = "i";
 	} else if (randomNo == 3) {
 		// livePieceShape = "sq";
+	} else if (randomNo == 4) {
+		// livePieceShape = "T";
 	}
 
-	livePieceShape = "L";
-
 	// console.log(randomNo);
+
+	livePieceShape = "i"; //PLACEHOLDER -- needs to be removed when RSG is uncommented
 	
 	livePieceRotation = 1;
 	livePieceTime = 0;
@@ -163,7 +169,111 @@ var randomShapeGenerator = function() {
 
 var shapeL = function() {
 	getRotation();
-		// console.log(v1);
+	var c1 = document.getElementById("cell x" + h1 + ", y" + v1); //cell #1
+	var c2 = document.getElementById("cell x" + h2 + ", y" + v2);
+	var c3 = document.getElementById("cell x" + h3 + ", y" + v3);
+	var c4 = document.getElementById("cell x" + h4 + ", y" + v4);
+	
+	if (v1 > 0) {
+		var c1m = document.getElementById("cell x" + h1 + ", y" + (v1-1)); // the cell directly above cell #1
+		var c2m = document.getElementById("cell x" + h2 + ", y" + (v2-1));
+		var c3m = document.getElementById("cell x" + h3 + ", y" + (v3-1));
+		var c4m = document.getElementById("cell x" + h4 + ", y" + (v4-1));
+		
+		if (c1m && c2m && c3m && c4m) {
+			if (livePieceRotation === 1) { //clears excess or junk squares off board
+				c1m.className = "empty"; //top-1
+				c4m.className = "empty"; //bottom right-1
+			} else if  (livePieceRotation === 2) {
+				c1m.className = "empty";
+				c2m.className = "empty";
+				c3m.className = "empty";
+			} else if  (livePieceRotation === 3) {
+				c3m.className = "empty";
+				c4m.className = "empty";
+			} else if  (livePieceRotation === 4) {
+				c1m.className = "empty";
+				c2m.className = "empty";
+				c4m.className = "empty";
+			}
+		}
+	}
+	// vv fills out appropriate cells vv
+	c1.className = "fullCell"; //top
+	c2.className = "fullCell"; //second from top
+	c3.className = "fullCell"; //bottom
+	c4.className = "fullCell"; //bottom right
+	bottomChecker();
+}
+
+var shapeZ = function() {
+	getRotation();
+	var c1 = document.getElementById("cell x" + h1 + ", y" + v1); //cell #1
+		var c2 = document.getElementById("cell x" + h2 + ", y" + v2);
+		var c3 = document.getElementById("cell x" + h3 + ", y" + v3);
+		var c4 = document.getElementById("cell x" + h4 + ", y" + v4);
+		
+		if (v1 > 0) {
+			var c1m = document.getElementById("cell x" + h1 + ", y" + (v1-1)); // the cell directly above cell #1
+			var c2m = document.getElementById("cell x" + h2 + ", y" + (v2-1));
+			var c3m = document.getElementById("cell x" + h3 + ", y" + (v3-1));
+			var c4m = document.getElementById("cell x" + h4 + ", y" + (v4-1));
+
+			if (c1m && c2m && c3m && c4m) {
+				if (livePieceRotation === 1 || livePieceRotation === 3) { //clears excess or junk squares off board
+					c1m.className = "empty"; //top-1
+					c3m.className = "empty"; 
+					// console.log("LPR");
+				} else if  (livePieceRotation === 2 || livePieceRotation === 4) {
+					c1m.className = "empty"; 
+					c3m.className = "empty"; 
+					c4m.className = "empty"; 
+				}
+			}
+		}
+	c1.className = "fullCell";
+	c2.className = "fullCell";
+	c3.className = "fullCell";
+	c4.className = "fullCell";
+	bottomChecker();
+}
+
+var shapeI = function() {
+	getRotation();
+	var c1 = document.getElementById("cell x" + h1 + ", y" + v1); //cell #1
+	var c2 = document.getElementById("cell x" + h2 + ", y" + v2);
+	var c3 = document.getElementById("cell x" + h3 + ", y" + v3);
+	var c4 = document.getElementById("cell x" + h4 + ", y" + v4);
+	
+	if (v1 > 0) {
+		var c1m = document.getElementById("cell x" + h1 + ", y" + (v1-1)); // the cell directly above cell #1
+		var c2m = document.getElementById("cell x" + h2 + ", y" + (v2-1));
+		var c3m = document.getElementById("cell x" + h3 + ", y" + (v3-1));
+		var c4m = document.getElementById("cell x" + h4 + ", y" + (v4-1));
+		
+		if (c1m && c2m && c3m && c4m) {
+			if (livePieceRotation === 1 || livePieceRotation === 3) { //clears excess or junk squares off board
+				c1m.className = "empty";
+				c2m.className = "empty";
+				c3m.className = "empty";
+				c4m.className = "empty";
+			} else if  (livePieceRotation === 2 || livePieceRotation === 4) {
+				c1m.className = "empty";
+			}
+		}
+	}
+	
+	// vv fills out appropriate cells vv
+	c1.className = "fullCell"; //top
+	c2.className = "fullCell"; //second from top
+	c3.className = "fullCell"; //bottom
+	c4.className = "fullCell"; //bottom right
+	bottomChecker();
+}
+
+var shapeSq = function() {
+	getRotation();
+		
 		var c1 = document.getElementById("cell x" + h1 + ", y" + v1); //cell #1
 		var c2 = document.getElementById("cell x" + h2 + ", y" + v2);
 		var c3 = document.getElementById("cell x" + h3 + ", y" + v3);
@@ -176,102 +286,60 @@ var shapeL = function() {
 			var c4m = document.getElementById("cell x" + h4 + ", y" + (v4-1));
 			
 			if (c1m && c2m && c3m && c4m) {
-				if (livePieceRotation === 1) { //clears excess or junk squares off board
-					c1m.className = "empty"; //top-1
-					c4m.className = "empty"; //bottom right-1
-				} else if  (livePieceRotation === 2) {
-					c1m.className = "empty";
-					c2m.className = "empty";
-					c3m.className = "empty";
-				} else if  (livePieceRotation === 3) {
-					c3m.className = "empty";
-					c4m.className = "empty";
-				} else if  (livePieceRotation === 4) {
-					c1m.className = "empty";
-					c2m.className = "empty";
-					c4m.className = "empty";
-				}
+				c1m.className = "empty"; //clears excess or junk squares off board
+				c2m.className = "empty";
 			}
 		}
-		// vv fills out appropriate cells vv
-		c1.className = "fullCell"; //top
-		c2.className = "fullCell"; //second from top
-		c3.className = "fullCell"; //bottom
-		c4.className = "fullCell"; //bottom right
-		bottomChecker();
+	
+	c1.className = "fullCell";
+	c2.className = "fullCell";
+	c3.className = "fullCell";
+	c4.className = "fullCell";
+	bottomChecker();
 }
 
-var shapeZ= function() {
+var shapeT = function() {
+	console.log("shapeT func");
 	getRotation();
+	var c1 = document.getElementById("cell x" + h1 + ", y" + v1); //cell #1
+	var c2 = document.getElementById("cell x" + h2 + ", y" + v2);
+	var c3 = document.getElementById("cell x" + h3 + ", y" + v3);
+	var c4 = document.getElementById("cell x" + h4 + ", y" + v4);
+	
+	if (v1 > 0) {
+		var c1m = document.getElementById("cell x" + h1 + ", y" + (v1-1)); // the cell directly above cell #1
+		var c2m = document.getElementById("cell x" + h2 + ", y" + (v2-1));
+		var c3m = document.getElementById("cell x" + h3 + ", y" + (v3-1));
+		var c4m = document.getElementById("cell x" + h4 + ", y" + (v4-1));
 		
-		arraySet1[h1][v1] = 1;
-		arraySet1[h2][v2] = 1;
-		arraySet1[h3][v3] = 1;
-		arraySet1[h4][v4] = 1;
-
-		if (livePieceRotation === 1 || livePieceRotation === 3) { //clears excess or junk squares off board
-			arraySet1[h1][v1-1] -= 1;
-			arraySet1[h3][v3-1] -= 1;
-			// console.log("LPR");
-		} else if  (livePieceRotation === 2 || livePieceRotation === 4) {
-			arraySet1[h1][v1-1] -= 1;
-			arraySet1[h3][v3-1] -= 1;
-			arraySet1[h4][v4-1] -= 1;
+		if (c1m && c2m && c3m && c4m) {
+			if (livePieceRotation === 1) { //clears excess or junk squares off board
+				c1m.className = "empty"; //top-1
+				c2m.className = "empty";
+				c3m.className = "empty";
+			} else if  (livePieceRotation === 2) {
+				c1m.className = "empty";
+				c4m.className = "empty";
+			} else if  (livePieceRotation === 3) {
+				c1m.className = "empty";
+				c3m.className = "empty";
+				c4m.className = "empty";
+			} else if  (livePieceRotation === 4) {
+				c1m.className = "empty";
+				c4m.className = "empty";
+			}
 		}
-		// console.log("1= " + arraySet1[h1][v1+1] + ", 2= " + arraySet1[h2][v2+1] + ", 3= " + arraySet1[h3][v3+1] + ", 4= " + arraySet1[h4][v4+1]);
-		// console.log("= " + arraySet1[h1][v1+1] + " " + arraySet1[h2][v2+1] + " " + arraySet1[h3][v3+1] + " " + arraySet1[h4][v4+1]);
-		
-		bottomChecker();
-
-	// fillOutGrid();
-}
-
-var shapeI= function() {
-	getRotation();
-		
-		arraySet1[h1][v1] = 1;
-		arraySet1[h2][v2] = 1;
-		arraySet1[h3][v3] = 1;
-		arraySet1[h4][v4] = 1;
-
-		if (livePieceRotation === 1 || livePieceRotation === 3) { //clears excess or junk squares off board
-			arraySet1[h1][v1-1] -= 1;
-			arraySet1[h2][v2-1] -= 1;
-			arraySet1[h3][v3-1] -= 1;
-			arraySet1[h4][v4-1] -= 1;
-			// console.log("LPR");
-		} else if  (livePieceRotation === 2 || livePieceRotation === 4) {
-			arraySet1[h1][v1-1] -= 1;
-		}
-		// console.log("1= " + arraySet1[h1][v1+1] + ", 2= " + arraySet1[h2][v2+1] + ", 3= " + arraySet1[h3][v3+1] + ", 4= " + arraySet1[h4][v4+1]);
-		// console.log("= " + arraySet1[h1][v1+1] + " " + arraySet1[h2][v2+1] + " " + arraySet1[h3][v3+1] + " " + arraySet1[h4][v4+1]);
-		
-		bottomChecker();
-
-	// fillOutGrid();
-}
-
-var shapeSq= function() {
-	getRotation();
-		
-		arraySet1[h1][v1] = 1;
-		arraySet1[h2][v2] = 1;
-		arraySet1[h3][v3] = 1;
-		arraySet1[h4][v4] = 1;
-
-		 
-		arraySet1[h1][v1-1] -= 1;//clears excess or junk squares off board
-		arraySet1[h2][v2-1] -= 1;
-		// console.log("1= " + arraySet1[h1][v1+1] + ", 2= " + arraySet1[h2][v2+1] + ", 3= " + arraySet1[h3][v3+1] + ", 4= " + arraySet1[h4][v4+1]);
-		// console.log("= " + arraySet1[h1][v1+1] + " " + arraySet1[h2][v2+1] + " " + arraySet1[h3][v3+1] + " " + arraySet1[h4][v4+1]);
-		
-		bottomChecker();
-	console.log("shape_fillOutGrid");
-	// fillOutGrid();
+	}
+	// vv fills out appropriate cells vv
+	c1.className = "fullCell"; //top
+	c2.className = "fullCell"; //second from top
+	c3.className = "fullCell"; //bottom
+	c4.className = "fullCell"; //bottom right
+	bottomChecker();
 }
 
 document.onkeydown = function(checkKeyPressed){
-	if (pauseState == false && livePieceOnBoard == 1) {
+	// if (pauseState == false && livePieceOnBoard == 1) { //NEEDS to be reactivated!
 
  	    if(checkKeyPressed.keyCode == 68){
 	        savePrevCells();//saves cells of the previous rotation
@@ -296,7 +364,7 @@ document.onkeydown = function(checkKeyPressed){
 	    		down();
 	    	}
 	    }
-	}
+	// }
 	    
   		// console.log("keypress");
   		// console.dir(arraySet1[7][21]);
@@ -322,16 +390,6 @@ var goLeft = function() {
 	 	&& c3l.className != "deadCell"
 	 	&& c4l.className != "deadCell" //checks nothing to the right of the piece
 	 	&& horiz >= 1) { //checks not at the left edge of the board
-
-		// console.log("grid Zeroed by gL");
-		// for (var xAxis = 0; xAxis < 10; xAxis++) { //sets all cells to 0;
-		// 	for (var yAxis = 0; yAxis < 22; yAxis++) { // xAxis === x , yAxis === y
-		// 		console.log("loop");
-		// 		if (arraySet1[xAxis][yAxis] === 1) {
-		// 			arraySet1[xAxis][yAxis] = 0;
-		// 		}
-		// 	}
-		// }
 		
 		horiz -= 1;
 		
@@ -354,7 +412,9 @@ var goLeft = function() {
 			shapeN();
 		} else if (livePieceShape === "sq") {
 			shapeSq();
-		}
+		} else if (livePieceShape === "T") {
+			shapeT();
+		} 
 	}
 }
 
@@ -377,15 +437,6 @@ var goRight = function() {
 	 	&& c4r.className != "deadCell" //checks nothing to the right of the piece
 	 	&& horiz <= 8) { //checks not at the right edge of the board
 	
-	// console.log("grid Zeroed by gR");
-	// for (var xAxis = 0; xAxis < 10; xAxis++) { //sets all cells to 0;
-	// 	for (var yAxis = 0; yAxis < 22; yAxis++) { // xAxis === x , yAxis === y
-	// 		console.log("loop");
-	// 		if (arraySet1[xAxis][yAxis] === 1) {
-	// 			arraySet1[xAxis][yAxis] = 0;
-	// 		}
-	// 	}
-	// }
 	getRotation();
 
 	horiz += 1;
@@ -409,22 +460,13 @@ var goRight = function() {
 			shapeN();
 		} else if (livePieceShape === "sq") {
 			shapeSq();
+		} else if (livePieceShape === "T") {
+			shapeT();
 		}
 	}
 }
 
 var CCW = function() { //rotate counter clockwise
-	// wipeCells();
-	// console.log("grid Zeroed by CCW");
-	// for (var xAxis = 0; xAxis < 10; xAxis++) { //sets all cells to 0;
-	// 	for (var yAxis = 0; yAxis < 22; yAxis++) { // xAxis === x , yAxis === y
-	// 		console.log("loop");
-	// 		if (arraySet1[xAxis][yAxis] === 1) {
-	// 			arraySet1[xAxis][yAxis] = 0;
-	// 		}
-	// 	}
-	// }
-
 	// var c1CCW = document.getElementById("cell x" + h1 + ", y" + v1); //cell #1
 	// var c2CCW = document.getElementById("cell x" + h2 + ", y" + v2);
 	// var c3CCW = document.getElementById("cell x" + h3 + ", y" + v3);
@@ -450,22 +492,13 @@ var CCW = function() { //rotate counter clockwise
 			shapeN();
 		} else if (livePieceShape === "sq") {
 			shapeSq();
+		} else if (livePieceShape === "T") {
+			shapeT();
 		}
 	}
 }
 
 var clockwise = function() { //rotate counter clockwise
-	
-	// console.log("grid Zeroed by CCW");
-	// for (var xAxis = 0; xAxis < 10; xAxis++) { //sets all cells to 0;
-	// 	for (var yAxis = 0; yAxis < 22; yAxis++) { // xAxis === x , yAxis === y
-	// 		console.log("loop");
-	// 		if (arraySet1[xAxis][yAxis] === 1) {
-	// 			arraySet1[xAxis][yAxis] = 0;
-	// 		}
-	// 	}
-	// }
-
 	// var c1cl = document.getElementById("cell x" + h1 + ", y" + v1); //cell #1
 	// var c2cl = document.getElementById("cell x" + h2 + ", y" + v2);
 	// var c3cl = document.getElementById("cell x" + h3 + ", y" + v3);
@@ -490,6 +523,8 @@ var clockwise = function() { //rotate counter clockwise
 			shapeN();
 		} else if (livePieceShape === "sq") {
 			shapeSq();
+		} else if (livePieceShape === "T") {
+			shapeT();
 		}
 	}
 	//fillOutGrid
@@ -546,7 +581,6 @@ var getRotation = function() { //rotation
 			h4 = horiz+1;
 			v4 = vert-1;
 		}
-
 	} else if (livePieceShape === "Z") {
 		if (livePieceRotation === 1 || livePieceRotation === 3) {
 			// console.log("___Rotation1___");
@@ -583,13 +617,13 @@ var getRotation = function() { //rotation
 		} else if (livePieceRotation === 2 || livePieceRotation === 4) {
 			// console.log("___Rotation2___");
 			h1 = horiz;
-			v1 = vert-2;
+			v1 = vert-1;
 			h2 = horiz;
-			v2 = vert-1;
+			v2 = vert;
 			h3 = horiz;
-			v3 = vert;
+			v3 = vert+1;
 			h4 = horiz;
-			v4 = vert+1;
+			v4 = vert+2;
 		}
 	} else if (livePieceShape === "sq") {
 			h1 = horiz;
@@ -600,6 +634,48 @@ var getRotation = function() { //rotation
 			v3 = vert;
 			h4 = horiz;
 			v4 = vert;
+	} else if (livePieceShape === "T") {
+		if (livePieceRotation === 1) {
+			// console.log("___Rotation1___");
+			h1 = horiz-1;
+			v1 = vert;
+			h2 = horiz;
+			v2 = vert
+			h3 = horiz+1;
+			v3 = vert;
+			h4 = horiz;
+			v4 = vert+1;
+		} else if (livePieceRotation === 2) {
+			// console.log("___Rotation2___");
+			h1 = horiz;
+			v1 = vert-1;
+			h2 = horiz;
+			v2 = vert;
+			h3 = horiz;
+			v3 = vert+1;
+			h4 = horiz-1;
+			v4 = vert;
+		} else if (livePieceRotation === 3) {
+			// console.log("___Rotation3___");
+			h1 = horiz-1;
+			v1 = vert;
+			h2 = horiz;
+			v2 = vert;
+			h3 = horiz+1;
+			v3 = vert;
+			h4 = horiz;
+			v4 = vert-1;
+		} else if (livePieceRotation === 4) {
+			// console.log("___Rotation4___");
+			h1 = horiz;
+			v1 = vert-1;
+			h2 = horiz;
+			v2 = vert;
+			h3 = horiz;
+			v3 = vert+1;
+			h4 = horiz+1;
+			v4 = vert;
+		}
 	}
 }
 
@@ -643,19 +719,38 @@ var lineCheck = function() { //checks for a continuous horizontal line of blocks
 		for (var xAxis = 0; xAxis < 10; xAxis++) {
 			console.log("cellCheck_loop");
 
-			var c1 = document.getElementById("cell x" + xAxis + ", y" + yAxis);
+			c1 = document.getElementById("cell x" + xAxis + ", y" + yAxis);
 			if (c1.className == "deadCell") {
 				deadCellCount++
-				// console.log("DCC= " + deadCellCount);
+				console.log("DCC= " + deadCellCount);
 
-				if (deadCellCount >= 9) { //why can't I get this to trigger?!?!?
-					wipeLine();
-					condemnedLine = yAxis;
-					// console.log(xAxis);
-					// console.log(n);
-					console.log("wipeLine");
-				}
-				
+				if (deadCellCount >= 10) {//checks that ten cells in a row are 'dead'
+					console.log("wipeLine1");
+
+					for (var x = 0; x < 10; x++) { //wipes the line in question
+						var c2 = document.getElementById("cell x" + x + ", y" + yAxis);
+						// c2.className = "trial3";
+						pause();
+						// setTimeout(function(){c2.className = "empty";}, 500);
+						c2.className = "empty";
+						console.log("wipeloop");
+					}
+
+					for (var x = 0; x < 10; x++) { //checks for dead cells, adds to new array
+						for (var y = 0; y < yAxis; y++) {
+							var c3 = document.getElementById("cell x" + x + ", y" + y); //the cell in question
+							// var c3m = document.getElementById("cell x" + x + ", y" + (y-1); //the cell directly above c3
+							var c3u = document.getElementById("cell x" + x + ", y" + (y+1)); //the cell directly underneath c3
+							if (c3.className == "deadCell") {
+								// deadCellArr.push(c3); //builds an array containing coordinates of all dead cells above the flashing line
+								c3.className = "empty";
+								c3u.className = "deadCell";
+								console.log("cellChange");
+								pause();
+							}
+						}
+					}
+				} // end of wipeLine func
 			} else {
 				// console.log("cell line incomplete");
 				// return;
@@ -666,17 +761,13 @@ var lineCheck = function() { //checks for a continuous horizontal line of blocks
 
 var wipeLine = function() {
 
-	for (var xAxis = 0; xAxis < 10; xAxis++) {
-		var yAxis = condemnedLine;
-		var c1 = document.getElementById("cell x" + xAxis + ", y" + yAxis);
-		c1.className = "trial3";
-	}
+	
 
 	console.log("line wiped");
 
 	//1. pause beat for duration
 	//2. wipe var condemnedline, wait one var 'beatTime'
-	//3. yAxis -1 for all lines above condemnedLine
+	//3. yAxis -1 for all lines above condemnedLine// can probably be deleted now
 }
 
 var bottomChecker = function() { //checks for dead cells or end of board below piece. Kills Live Piece if finds.
