@@ -1,83 +1,83 @@
-/*div, html, body, section, a, #abt_copy_p {
+#main_grid, #addtohtml1, #instructions, #gridCont, #instrCont, #scoreboardCont, #scoreBoard, body, html{
 	display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-}*/
+}
+
+
+@font-face {font-family: SSP-l; src: url('fonts/SourceSansPro-Light.ttf');}
+@font-face {font-family: SSP-r; src: url('fonts/SourceSansPro-Regular.otf');}
+@font-face {font-family: SSP-sb; src: url('fonts/SourceSansPro-Semibold.ttf');}
+@font-face {font-family: SSP-b; src: url('fonts/SourceSansPro-Bold.otf');}
+@font-face {font-family: champ-b; src: url('fonts/champagne/champagne_limousinesbold.ttf');}
+@font-face {font-family: champ-bi; src: url('fonts/champagne/champagne_limousinesbolditalic.ttf');}
+@font-face {font-family: champ-r; src: url('fonts/champagne/champagnelimousines.ttf');}
+@font-face {font-family: robo-b; src: url('fonts/roboto/robotocondensed-bold.ttf');}
+@font-face {font-family: bebas; src: url('fonts/bebasneue.otf');}
+@font-face {font-family: monty; src: url('fonts/montserrat/montserrat-regular.ttf');}
+@font-face {font-family: rale-r; src: url('fonts/raleway/raleway-regular.ttf');}
+
 
 body, html {
 	height: 100%;
 	width: 100%;
 	margin: 0;
 	padding: 0;
+	justify-content: flex-start;
+	align-items: center;
+	/*margin-left: 4%;*/
 }
 
-#main_grid {
+/*#main_grid {
 	height: 400px;
 	width: 400px;
-	/*background-color: yellow;*/
+	background-color: darkred;
+	opacity: 0.5;
+}*/
+
+#gridCont {
+	position: relative;
+	width: auto;
+	/*background-color: darkred;*/
+	width: 300px;
+	height: 660px;
+	margin-left: 4%;
 }
 
 #addtohtml1 {
+	left: 100px;
+	top: 100px;
+}
+
+.fullCell, .empty, .deadCell, .trial3, .trial4 {
 	position: absolute;
-	/*background-color: green;*/
-	width: 210px;
-	height: 462px;
+	height: 24px;
+	width: 24px;
+	box-shadow: 1px 1px 3px darkgray;
 }
 
 .empty {
-	/*positive cells*/
-	position: absolute;
 	background-color: red;
-	height: 19px;
-	width: 19px;
-	left: 150px;
-	top: 150px;
-	border-radius: 6px;
-	border-color: red;
-	border: 10px;
 }
 
 .fullCell {
-	/*negative cells*/
-	position: absolute;
 	background-color: purple;
-	height: 19px;
-	width: 19px;
-	left: 150px;
-	top: 150px;
-	/*border-style: solid;*/
-	border-width: 8px;	
-	border-radius: 5px;
-	border-color: blue;
-	border: 10px;
+	box-shadow: 3px 3px 5px darkgray;
+
 }
 
 .trial3 {
-	/*negative cells*/
-	position: absolute;
 	background-color: yellow;
-	height: 19px;
-	width: 19px;
-	left: 150px;
-	top: 150px;
-	border-radius: 2px;
-	border-color: blue;
-	border: 10px;
+}
+
+.trial4 {
+	background-color: goldenrod;
 }
 
 .deadCell {
-	/*dead cells*/
-	position: absolute;
 	background-color: gray;
-	height: 19px;
-	width: 19px;
-	left: 150px;
-	top: 150px;
-	border-radius: 2px;
-	border-color: blue;
-	border: 10px;
 }
 
 
@@ -90,16 +90,54 @@ body, html {
 	background-color: yellow;
 }
 
-#instructions {
-	position: absolute;
+#instrCont {
+	/*position: absolute;*/
+	font-family: monty;
+	align-items: center ;
 	left: 250px;
-	font-family: helvetica;
-	background-color: yellow;
-	height: 190px;
-	width: 200px;
+	width: auto;
+	height: auto;
+	/*background-color: yellow;*/
+	/*flex-direction: column;*/
+	
 	/*padding-left: 40px;*/
-	padding-top: 20px;
+	margin-top: 20px;
 	text-align: center;
+}
+
+#instrBtn {
+	color: white;
+	width: 110px;
+	height: auto;
+	text-align: center;
+	
+	background-color: darkblue;
+	/*padding: 10px;*/
+	border-radius: 5px;
+	font-family: monty;
+	vertical-align: middle;
+	height: 40px;
+	margin-right: 40px; 
+
+}
+
+#instructions {
+	flex-direction: column;
+	justify-content: center;
+	height: 300px;
+	/*background-color: goldenrod;*/
+	transition: width 0.4s ease;
+	overflow: hidden;
+	white-space: nowrap;
+	margin-top: 5px;
+}
+
+.iSmall {
+	width: 0px;
+}
+
+.iBig {
+	width: 300px;
 }
 
 #pauseCont {
@@ -119,4 +157,32 @@ body, html {
 	width: 100px;
 	width: 100px;
 	height: 100px;
+}
+
+#scoreboardCont {
+	height: 95%;
+	width: 300px;
+	justify-content: center;
+	align-items: center;
+	background-color: darkgreen;
+}
+
+#scoreBoard {
+	flex-direction: column;
+	justify-content: center;
+	width: 70%;
+	height: 175px;
+	color: white;
+	font-family: bebas;
+	border: 3px solid black;
+}
+
+#scoreTit {
+	margin-left: 10%;
+	font-size: 30px;
+}
+
+#score {
+	margin-left: 40%;
+	font-size: 100px;
 }

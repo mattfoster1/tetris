@@ -55,11 +55,17 @@ var fillOutGrid = function() {
 		for (var xAxis = 0; xAxis < 10; xAxis++) {
 			for (var yAxis = 0; yAxis < 22; yAxis++) { // xAxis === x , yAxis === y
 				console.log("loop");
+				
 				var toAddChild = document.createElement("div" + xAxis); //creates all the divs, givs classes and IDs
 				toAddChild.id = "cell x"+ xAxis + ", y" + yAxis;
 				toAddChild.className = "empty";
-				toAddChild.style.left = xAxis*21 + 'px';
-				toAddChild.style.top = yAxis*21 + 'px';
+				// console.dir(document.getElementById("e.g.").style.height);
+				// var cellSize = document.getElementById("e.g.").style.height;
+				// toAddChild.style.left = xAxis*30 + 'px';
+				// toAddChild.style.top = yAxis*30 + 'px';
+
+				toAddChild.style.left = xAxis*30 + 'px';
+				toAddChild.style.top = yAxis*30 + 'px';
 				// toAddChild.innerHTML = arraySet1[xAxis][yAxis];
 				
 				if (arraySet1[xAxis][yAxis] === 1) { //sets up secondary class (for active cells)
@@ -146,20 +152,20 @@ var randomShapeGenerator = function() {
 
 	var randomNo = Math.floor(Math.random()*5);
 	if (randomNo == 0) {
-		// livePieceShape = "L";
+		livePieceShape = "L";
 	} else if (randomNo == 1) {
-		// livePieceShape = "Z";
+		livePieceShape = "Z";
 	} else if (randomNo == 2) {
-		// livePieceShape = "i";
+		livePieceShape = "i";
 	} else if (randomNo == 3) {
-		// livePieceShape = "sq";
+		livePieceShape = "sq";
 	} else if (randomNo == 4) {
-		// livePieceShape = "T";
+		livePieceShape = "T";
 	}
 
 	// console.log(randomNo);
 
-	livePieceShape = "i"; //PLACEHOLDER -- needs to be removed when RSG is uncommented
+	// livePieceShape = "i"; //PLACEHOLDER -- needs to be removed when RSG is uncommented
 	
 	livePieceRotation = 1;
 	livePieceTime = 0;
@@ -299,7 +305,7 @@ var shapeSq = function() {
 }
 
 var shapeT = function() {
-	console.log("shapeT func");
+	// console.log("shapeT func");
 	getRotation();
 	var c1 = document.getElementById("cell x" + h1 + ", y" + v1); //cell #1
 	var c2 = document.getElementById("cell x" + h2 + ", y" + v2);
@@ -717,39 +723,49 @@ var lineCheck = function() { //checks for a continuous horizontal line of blocks
 		var deadCellCount = 0;
 
 		for (var xAxis = 0; xAxis < 10; xAxis++) {
-			console.log("cellCheck_loop");
+			// console.log("cellCheck_loop");
 
 			c1 = document.getElementById("cell x" + xAxis + ", y" + yAxis);
 			if (c1.className == "deadCell") {
 				deadCellCount++
-				console.log("DCC= " + deadCellCount);
+				// console.log("DCC= " + deadCellCount);
 
 				if (deadCellCount >= 10) {//checks that ten cells in a row are 'dead'
-					console.log("wipeLine1");
+					var y1 = yAxis;
+					setTimeout(function(){
 
-					for (var x = 0; x < 10; x++) { //wipes the line in question
-						var c2 = document.getElementById("cell x" + x + ", y" + yAxis);
-						// c2.className = "trial3";
+						console.log("wipeLine1");
+						console.log("pause");
 						pause();
-						// setTimeout(function(){c2.className = "empty";}, 500);
-						c2.className = "empty";
-						console.log("wipeloop");
-					}
 
-					for (var x = 0; x < 10; x++) { //checks for dead cells, adds to new array
-						for (var y = 0; y < yAxis; y++) {
-							var c3 = document.getElementById("cell x" + x + ", y" + y); //the cell in question
-							// var c3m = document.getElementById("cell x" + x + ", y" + (y-1); //the cell directly above c3
-							var c3u = document.getElementById("cell x" + x + ", y" + (y+1)); //the cell directly underneath c3
-							if (c3.className == "deadCell") {
-								// deadCellArr.push(c3); //builds an array containing coordinates of all dead cells above the flashing line
-								c3.className = "empty";
-								c3u.className = "deadCell";
-								console.log("cellChange");
-								pause();
-							}
+						for (var x = 0; x < 10; x++) { //wipes the line in question
+							var c2 = document.getElementById("cell x" + x + ", y" + y1);
+							// console.log(x);
+							// console.log(y1);
+							c2.className = "trial3"; //yellow - will be changed to "empty"
+							// c2.className = "empty";
+							// console.log("wipeloop");
 						}
-					}
+					}, 1000);
+
+
+					setTimeout(function(){
+						for (var x = 0; x < 10; x++) { 
+							for (var y = 0; y < y1; y++) {
+								var c3 = document.getElementById("cell x" + x + ", y" + y); //the cell in question
+								var c3u = document.getElementById("cell x" + x + ", y" + (y+1)); //the cell directly underneath c3
+								if (c3.className == "deadCell") {
+									c3u.className = "deadCell";
+									c3.className = "trial4"; //goldenrod
+									
+									//ISSUE: what if there is a gap/air-hole?
+									// console.log("cellChange");
+								}
+							}
+						} //end of 10x loop
+					console.log("pause");
+					pause();
+					}, 2000);
 				} // end of wipeLine func
 			} else {
 				// console.log("cell line incomplete");
@@ -760,9 +776,6 @@ var lineCheck = function() { //checks for a continuous horizontal line of blocks
 }
 
 var wipeLine = function() {
-
-	
-
 	console.log("line wiped");
 
 	//1. pause beat for duration
@@ -819,4 +832,28 @@ var wipePrevCells = function() {
 	pc2.className = "empty";
 	pc3.className = "empty";
 	pc4.className = "empty";
+}
+
+var showInstr = function() {
+// 	if (document.getElementById("instructions").style.height == "0px") {
+// 		document.getElementById("instructions").style.height = "400px";
+// 		console.log("1");
+// 	} else if (document.getElementById("instructions").style.display >= "400px") {
+// 		document.getElementById("instructions").style.display = "0px";
+// 		console.log("2");
+// 	}
+
+ 	if (document.getElementById("instructions").className == "iSmall") {
+		document.getElementById("instructions").className = "iBig";
+		document.getElementById("instrBtn").innerHTML = "close";
+		console.log("1");
+	} else if (document.getElementById("instructions").className == "iBig") {
+		document.getElementById("instructions").className = "iSmall";
+		document.getElementById("instrBtn").innerHTML = "Instructions";
+		console.log("2");
+	}
+
+
+
+	console.log("3");
 }
