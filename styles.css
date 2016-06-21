@@ -51,11 +51,16 @@ body, html {
 	top: 100px;
 }
 
-.fullCell, .empty, .deadCell, .trial3, .trial4 {
+.fullCell, .empty, .deadCell, .trial3, .trial4, .classDD, .classDE, .classED, .classEE {
 	position: absolute;
 	height: 24px;
 	width: 24px;
 	box-shadow: 1px 1px 3px darkgray;
+}
+
+
+.classDD, .classDE, .classED, .classEE {
+	background-color: hotpink;
 }
 
 .empty {

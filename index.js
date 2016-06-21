@@ -732,7 +732,7 @@ var lineCheck = function() { //checks for a continuous horizontal line of blocks
 
 				if (deadCellCount >= 10) {//checks that ten cells in a row are 'dead'
 					var y1 = yAxis;
-					setTimeout(function(){
+					// setTimeout(function(){
 
 						console.log("wipeLine1");
 						console.log("pause");
@@ -742,30 +742,148 @@ var lineCheck = function() { //checks for a continuous horizontal line of blocks
 							var c2 = document.getElementById("cell x" + x + ", y" + y1);
 							// console.log(x);
 							// console.log(y1);
-							c2.className = "trial3"; //yellow - will be changed to "empty"
+							c2.className = "empty"; //yellow - will be changed to "empty"
 							// c2.className = "empty";
 							// console.log("wipeloop");
 						}
-					}, 1000);
+					// }, 2000);
+					// setTimeout(function(){
+						
+						for (var x = 9; x >= 0; x--) { // sets up placeholder classes (probably not neccessary actually)
+							for (var y = y1; y > 0; y--) {
+								var c3 = document.getElementById("cell x" + x + ", y" + y); //the cell in question
+								var c3m = document.getElementById("cell x" + x + ", y" + (y-1)); //the cell directly underneath c3
+								var c3u = document.getElementById("cell x" + x + ", y" + (y+1)); //the cell directly underneath c3
+								
+								if (c3m) {
+									if (c3.className == "deadCell" && c3m.className == "deadCell") {
+										// c3.className = "classDD";
+										c3.className = "deadCell";
+										console.log("DD");
+									}
+									else if (c3.className == "deadCell" && c3m.className == "empty") {
+										// c3.className = "classDE";
+										c3.className = "empty";
+										console.log("DE");
+									}
+									else if (c3.className == "empty" && c3m.className == "deadCell") {
+										// c3.className = "classED";
+										c3.className = "deadCell";
+										console.log("ED");
+									}
+									else if (c3.className == "empty" && c3m.className == "empty") {
+										// c3.className = "classEE";
+										c3.className = "empty";
+										console.log("EE");
+									}
+								}
+							}
+						}
 
 
-					setTimeout(function(){
+						// for (var x = 9; x >= 0; x--) { //switches out placeholder classes with real classes
+						// 	// console.log("loopy");
+						// 	for (var y = y1; y > 0; y--) {
+						// 		// console.log("loopy2");
+						// 		var c3 = document.getElementById("cell x" + x + ", y" + y); //the cell in question
+						// 		if (c3.className == "classDD") {
+						// 			c3.className = "deadCell";
+						// 			console.log("dead" + c3);
+						// 		}
+						// 		if (c3.className == "classDE") {
+						// 			c3.className = "empty";
+						// 			console.log("dead > empty" + c3);
+						// 		}
+						// 		if (c3.className == "classED") {
+						// 			c3.className = "deadCell";
+						// 			console.log("empty > dead" + c3);
+						// 		}
+						// 		if (c3.className == "classEE") {
+						// 			c3.className = "empty";
+						// 			console.log("empty" + c3);
+						// 		}
+						// 	}
+						// } //end of 10x loop
+
+
+						
+					console.log("pause");
+					pause();
+					// }, 5000);
+				} // end of wipeLine func
+			} else {
+				// console.log("cell line incomplete");
+				// return;
+			}
+		}
+	}
+}
+
+var lineCheckOld = function() { //checks for a continuous horizontal line of blocks on any part of the board
+	for (var yAxis = 0; yAxis < 22; yAxis++) {
+		var deadCellCount = 0;
+
+		for (var xAxis = 0; xAxis < 10; xAxis++) {
+			// console.log("cellCheck_loop");
+
+			c1 = document.getElementById("cell x" + xAxis + ", y" + yAxis);
+			if (c1.className == "deadCell") {
+				deadCellCount++
+				// console.log("DCC= " + deadCellCount);
+
+				if (deadCellCount >= 10) {//checks that ten cells in a row are 'dead'
+					var y1 = yAxis;
+					// setTimeout(function(){
+
+						console.log("wipeLine1");
+						console.log("pause");
+						pause();
+
+						for (var x = 0; x < 10; x++) { //wipes the line in question
+							var c2 = document.getElementById("cell x" + x + ", y" + y1);
+							// console.log(x);
+							// console.log(y1);
+							c2.className = "empty"; //yellow - will be changed to "empty"
+							// c2.className = "empty";
+							// console.log("wipeloop");
+						}
+					// }, 2000);
+					// setTimeout(function(){
+						
 						for (var x = 0; x < 10; x++) { 
 							for (var y = 0; y < y1; y++) {
 								var c3 = document.getElementById("cell x" + x + ", y" + y); //the cell in question
 								var c3u = document.getElementById("cell x" + x + ", y" + (y+1)); //the cell directly underneath c3
 								if (c3.className == "deadCell") {
-									c3u.className = "deadCell";
 									c3.className = "trial4"; //goldenrod
-									
+									c3u.className = "trial3";
+
 									//ISSUE: what if there is a gap/air-hole?
-									// console.log("cellChange");
+								}
+								if (c3.className == "empty") { //shifts air holes down
+									c3u.className = "empty";
+									//ISSUE: what if there is a gap/air-hole?
 								}
 							}
+						}
+
+
+						for (var x = 0; x < 10; x++) { 
+							for (var y = 0; y < y1; y++) {
+								var c3 = document.getElementById("cell x" + x + ", y" + y); //the cell in question
+								var c3u = document.getElementById("cell x" + x + ", y" + (y+1)); //the cell directly underneath c3
+								// if (c3.className == "deadCell") {
+								// 	c3.className = "trial4"; //goldenrod
+								// 	//ISSUE: what if there is a gap/air-hole?
+								// }
+							}
 						} //end of 10x loop
+
+
+						
 					console.log("pause");
 					pause();
-					}, 2000);
+					// }, 5000);
 				} // end of wipeLine func
 			} else {
 				// console.log("cell line incomplete");
