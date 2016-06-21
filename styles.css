@@ -117,7 +117,7 @@ body, html {
 	font-family: monty;
 	vertical-align: middle;
 	height: 40px;
-	margin-right: 40px; 
+	margin: 40px; 
 
 }
 
@@ -126,6 +126,7 @@ body, html {
 	justify-content: center;
 	height: 300px;
 	/*background-color: goldenrod;*/
+	-webkit-transition: width 0.4s ease;
 	transition: width 0.4s ease;
 	overflow: hidden;
 	white-space: nowrap;
@@ -145,7 +146,7 @@ body, html {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
-	left: 500px;
+	left: 400px;
 	top: 200px;
 	width: 100px;
 	height: 100px;
@@ -154,7 +155,6 @@ body, html {
 }
 
 #pauseBtn {
-	width: 100px;
 	width: 100px;
 	height: 100px;
 }
@@ -175,6 +175,8 @@ body, html {
 	color: white;
 	font-family: bebas;
 	border: 3px solid black;
+	box-shadow: 2px 2px 5px rgb(1,54,1);
+	/*box-shadow: 2px 2px 5px darkgreen;*/
 }
 
 #scoreTit {
