@@ -9,33 +9,22 @@ var livePieceTime = 0;
 var vert = livePieceTime; //timer value (pulls items downwards)
 var horiz = 4; //a constant. Defines centerpoint. Items move away from it at the center. 
 livePieceOnBoard = 0;
-var livePieceShape;
+var livePieceShape, nextPieceShape;
+
 var position1v = [];
 var livePieceRotation;
 var pauseState = false;
 var downInterval;
 var downval = 0; //to stop 'down' interval repeating
 var beatTime = 500;
+var jsScore = 0;
+var level = 1;
+
 var condemnedLine;
 var c1;
-
-var deadCellArr = [];
-
-var h1;
-var v1;
-var h2;
-var v2;
-var h3;
-var v3;
-var h4;
-var v4;
-
-var pc1;
-var pc2;
-var pc3;
-var pc4;
-
-
+// var deadCellArr = [];
+var h1, v1, h2, v2, h3, v3, h4, v4;
+var pc1, pc2, pc3, pc4;
 
 var setGridtoZero = function() {
 
@@ -91,6 +80,12 @@ var theBeat = function() {
 
 	if (pauseState === false) {
 		
+		// console.log("livePieceOnBoard = " + livePieceOnBoard);
+		if (livePieceOnBoard === 0) {
+			// console.log("livePieceOnBoard is zero, setting RSG");
+			pieceGenerator();
+		}
+
 		var boardLimit = 23;
 		if (beat >= boardLimit) {
 			console.log("killa");
@@ -124,11 +119,7 @@ var theBeat = function() {
 			killPiece();
 		}
 		
-		// console.log("livePieceOnBoard = " + livePieceOnBoard);
-		if (livePieceOnBoard === 0) {
-			console.log("livePieceOnBoard is zero, setting RSG");
-			randomShapeGenerator();
-		}
+		
 	}
 	// console.log("Beat_fillOutGrid");
 	//fillOutGrid
@@ -143,34 +134,62 @@ var start = function() {
 	console.log("start");
 }
 
-var randomShapeGenerator = function() {
-	console.log("NOTIFICATION: randomShapeGenerator triggered");
+var pieceGenerator = function() {
+	// console.log("NOTIFICATION: randomShapeGenerator triggered");
 	// console.log("livePieceOnBoard = " + livePieceOnBoard);
 	livePieceOnBoard = 1;
-	
-	var arrivalTime = gameTime;
+		var arrivalTime = gameTime;
 
-	var randomNo = Math.floor(Math.random()*5);
-	if (randomNo == 0) {
-		livePieceShape = "L";
-	} else if (randomNo == 1) {
-		livePieceShape = "Z";
-	} else if (randomNo == 2) {
-		livePieceShape = "i";
-	} else if (randomNo == 3) {
-		livePieceShape = "sq";
-	} else if (randomNo == 4) {
-		livePieceShape = "T";
+	if (nextPieceShape == undefined) {
+		randomShapeGenerator();
 	}
+	
+	livePieceShape = nextPieceShape; //move upcoming piece from memory to put on board
+	console.log(nextPieceShape);
 
-	// console.log(randomNo);
-
-	// livePieceShape = "i"; //PLACEHOLDER -- needs to be removed when RSG is uncommented
+	randomShapeGenerator();
+	// livePieceShape = "i"; //PLACEHOLDER 
 	
 	livePieceRotation = 1;
 	livePieceTime = 0;
 	// vert = 4;
 	beat = 0;
+	console.log(nextPieceShape);
+}
+
+var randomShapeGenerator = function() {
+	var randomNo = Math.floor(Math.random()*5);
+	if (randomNo == 0) {
+		nextPieceShape = "L";
+	} else if (randomNo == 1) {
+		nextPieceShape = "Z";
+	} else if (randomNo == 2) {
+		nextPieceShape = "i";
+	} else if (randomNo == 3) {
+		nextPieceShape = "sq";
+	} else if (randomNo == 4) {
+		nextPieceShape = "T";
+	}
+	
+	nextPiecePop();
+}
+
+var nextPiecePop = function() {
+	
+
+
+	if (nextPieceShape == "L") {
+		document.getElementById("nextPiece").style.background = "url('images/L_screenshot.png') no-repeat center center";
+	} else if (nextPieceShape == "Z") {
+		document.getElementById("nextPiece").style.background = "url('images/z_screenshot.png') no-repeat center center";
+	} else if (nextPieceShape == "i") {
+		document.getElementById("nextPiece").style.background = "url('images/line_screenshot.png') no-repeat center center";
+	} else if (nextPieceShape == "sq") {
+		document.getElementById("nextPiece").style.background = "url('images/sq_screenshot.png') no-repeat center center";
+	} else if (nextPieceShape == "T") {
+		document.getElementById("nextPiece").style.background = "url('images/T_screenshot.png') no-repeat center center";
+	}
+
 }
 
 var shapeL = function() {
@@ -345,7 +364,7 @@ var shapeT = function() {
 }
 
 document.onkeydown = function(checkKeyPressed){
-	// if (pauseState == false && livePieceOnBoard == 1) { //NEEDS to be reactivated!
+	if (pauseState == false && livePieceOnBoard == 1) { //NEEDS to be reactivated!
 
  	    if(checkKeyPressed.keyCode == 68){
 	        savePrevCells();//saves cells of the previous rotation
@@ -370,7 +389,7 @@ document.onkeydown = function(checkKeyPressed){
 	    		down();
 	    	}
 	    }
-	// }
+	}
 	    
   		// console.log("keypress");
   		// console.dir(arraySet1[7][21]);
@@ -387,26 +406,17 @@ var goLeft = function() {
 	var c3l = document.getElementById("cell x" + (h3-1) + ", y" + v3);
 	var c4l = document.getElementById("cell x" + (h4-1) + ", y" + v4);
 
-	getRotation();
-
+	// console.log(livePieceOnBoard);
 	if (
 		livePieceOnBoard == 1
 		&& c1l.className != "deadCell"
 	 	&& c2l.className != "deadCell"
 	 	&& c3l.className != "deadCell"
-	 	&& c4l.className != "deadCell" //checks nothing to the right of the piece
+	 	&& c4l.className != "deadCell" //checks nothing to the left of the piece
 	 	&& horiz >= 1) { //checks not at the left edge of the board
 		
+		getRotation();		
 		horiz -= 1;
-		
-		// c1.className = "empty";
-		// c2.className = "empty";
-		// c3.className = "empty";
-		// c4.className = "empty";
-		// c1l.className = "fullCell";
-		// c2l.className = "fullCell";
-		// c3l.className = "fullCell";
-		// c4l.className = "fullCell";
 
 		if (livePieceShape === "L") {
 			shapeL();
@@ -444,17 +454,7 @@ var goRight = function() {
 	 	&& horiz <= 8) { //checks not at the right edge of the board
 	
 	getRotation();
-
 	horiz += 1;
-
-	// c1.className = "empty";
-	// c2.className = "empty";
-	// c3.className = "empty";
-	// c4.className = "empty";
-	// c1r.className = "fullCell";
-	// c2r.className = "fullCell";
-	// c3r.className = "fullCell";
-	// c4r.className = "fullCell";
 
 	if (livePieceShape === "L") {
 			shapeL();
@@ -686,10 +686,7 @@ var getRotation = function() { //rotation
 }
 
 var killPiece = function() {
-		// arraySet1[h1][v1] = -25; //top
-		// arraySet1[h2][v2] = -25; //second from top
-		// arraySet1[h3][v3] = -25; //bottom
-		// arraySet1[h4][v4] = -25;//bottom right
+		livePieceOnBoard = 0;
 
 		var c1 = document.getElementById("cell x" + h1 + ", y" + v1); //cell #1
 		var c2 = document.getElementById("cell x" + h2 + ", y" + v2);
@@ -701,24 +698,18 @@ var killPiece = function() {
 		c3.className = "deadCell";
 		c4.className = "deadCell";
 
-		// console.log("livePieceRotation = " + livePieceRotation);
 		downval = 0;
 		clearInterval(downInterval);
-		console.log("downInterval cleared");
-		// var interval = setInterval(function(){theBeat();}, beatTime);
-		livePieceOnBoard = 0;
+		
 		beat = 0;
 		livePieceTime = 0;
 		horiz = 4;
 		
-		console.log("beat = " + beat);
-		console.log("---------------dead-----");
-
-
+		topCheck();
 		lineCheck();
 }
 
-var lineCheck = function() { //checks for a continuous horizontal line of blocks on any part of the board
+var lineCheck = function() { //checks for a continuous horizontal line of blocks on any part of the board, removed any, moves higher cells down and adds to scoreboard. Also speeds up beat
 	for (var yAxis = 0; yAxis < 22; yAxis++) {
 		var deadCellCount = 0;
 
@@ -732,22 +723,22 @@ var lineCheck = function() { //checks for a continuous horizontal line of blocks
 
 				if (deadCellCount >= 10) {//checks that ten cells in a row are 'dead'
 					var y1 = yAxis;
-					// setTimeout(function(){
-
-						console.log("wipeLine1");
-						console.log("pause");
-						pause();
+					console.log("wipeLine1");
+					console.log("pause");
+					pause();
 
 						for (var x = 0; x < 10; x++) { //wipes the line in question
 							var c2 = document.getElementById("cell x" + x + ", y" + y1);
-							// console.log(x);
-							// console.log(y1);
 							c2.className = "empty"; //yellow - will be changed to "empty"
-							// c2.className = "empty";
-							// console.log("wipeloop");
 						}
-					// }, 2000);
-					// setTimeout(function(){
+
+						jsScore ++;
+						console.log(jsScore);
+						document.getElementById("score").innerHTML = jsScore;
+
+						beatTime -= (beatTime / 10); //makes the beat 10% faster
+						level++;
+						document.getElementById("level").innerHTML = level;
 						
 						for (var x = 9; x >= 0; x--) { // sets up placeholder classes (probably not neccessary actually)
 							for (var y = y1; y > 0; y--) {
@@ -757,24 +748,16 @@ var lineCheck = function() { //checks for a continuous horizontal line of blocks
 								
 								if (c3m) {
 									if (c3.className == "deadCell" && c3m.className == "deadCell") {
-										// c3.className = "classDD";
 										c3.className = "deadCell";
-										console.log("DD");
 									}
 									else if (c3.className == "deadCell" && c3m.className == "empty") {
-										// c3.className = "classDE";
 										c3.className = "empty";
-										console.log("DE");
 									}
 									else if (c3.className == "empty" && c3m.className == "deadCell") {
-										// c3.className = "classED";
 										c3.className = "deadCell";
-										console.log("ED");
 									}
 									else if (c3.className == "empty" && c3m.className == "empty") {
-										// c3.className = "classEE";
 										c3.className = "empty";
-										console.log("EE");
 									}
 								}
 							}
@@ -819,7 +802,7 @@ var lineCheck = function() { //checks for a continuous horizontal line of blocks
 	}
 }
 
-var lineCheckOld = function() { //checks for a continuous horizontal line of blocks on any part of the board
+var lineCheckOld = function() { //can probably be deleted. Just here as a kind of backup really
 	for (var yAxis = 0; yAxis < 22; yAxis++) {
 		var deadCellCount = 0;
 
@@ -893,12 +876,15 @@ var lineCheckOld = function() { //checks for a continuous horizontal line of blo
 	}
 }
 
-var wipeLine = function() {
-	console.log("line wiped");
-
-	//1. pause beat for duration
-	//2. wipe var condemnedline, wait one var 'beatTime'
-	//3. yAxis -1 for all lines above condemnedLine// can probably be deleted now
+var topCheck = function() { // does gameover if any dead cells are in the top line 
+	setTimeout(function(){ 
+		for (var x=0; x<10; x++) {
+			var c1 = document.getElementById("cell x" + x + ", y" + 0); //cell #1
+			if (c1.className == "deadCell") {
+				gameover();
+			}
+		}
+	}, 200);
 }
 
 var bottomChecker = function() { //checks for dead cells or end of board below piece. Kills Live Piece if finds.
@@ -909,7 +895,7 @@ var bottomChecker = function() { //checks for dead cells or end of board below p
 
 	if (c1u == null || c2u == null || c3u == null || c4u == null //end of board 
 	|| c1u.className == "deadCell" || c2u.className == "deadCell" || c3u.className == "deadCell" || c4u.className == "deadCell" ) { //if any dead pieces below:
-		console.log("bottomChecker triggered");
+		// console.log("bottomChecker triggered");
 		killPiece();
 	} else {
 		// console.log("bottomChecker _ NOT _ triggered");		
@@ -974,4 +960,8 @@ var showInstr = function() {
 
 
 	console.log("3");
+}
+
+var gameover = function() { // needs to be a css feast
+	pause();
 }

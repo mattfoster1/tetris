@@ -8,10 +8,15 @@
 <body onload="start()">
 
   <div id="gridCont">
-    <div id= "addtohtml1"></div>
+    <div id="logo"></div>
+    <div id="gridContBgr">
+      <div id="grid">
+        <div id= "addtohtml1"></div>
+      </div>
+    </div>
   </div>
 
-    <div id="instrCont">
+  <div id="instrCont">
     <button id="instrBtn" onclick="showInstr()">Instructions</button>
     <div id="instructions" class="iSmall" style=""><p><b>Instructions:</b><br><br>Use <b><br><br>a</b> and <b>d</b> to move left and right,<br><br> <br><br> <b>arrow keys</b> to rotate and <br><br><b>space</b> to speed up</p></div>
   </div>
@@ -28,11 +33,27 @@
   <!-- <div id="e.g." class="empty" style="height: 30px;"></div> -->
 
 <div id="scoreboardCont">
-  <div id="scoreBoard">
-    <div id="scoreTit">Score:</div>
-    <div id="score">0</div>
+  
+  <div id="nextPieceCont">
+    <div id="nextPieceTit" class="title">Next piece:</div>
+    <div id="nextPiece"></div>
   </div>
+
+  <div id="scoreBoard">
+    <div id="scoreTit" class="title">Score:</div>
+    <div id="score" class="value">0</div>
+  </div>
+
+  <div id="levelBoard">
+    <div id="levelTit" class="title">Level:</div>
+    <div id="level" class="value">1</div>
+  </div>
+
 </div>
+
+
+
+
 
 </body>
 </html>
