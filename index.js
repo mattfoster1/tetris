@@ -22,7 +22,6 @@ var level = 1;
 
 var condemnedLine;
 var c1;
-// var deadCellArr = [];
 var h1, v1, h2, v2, h3, v3, h4, v4;
 var pc1, pc2, pc3, pc4;
 
@@ -43,36 +42,45 @@ var fillOutGrid = function() {
 		var toAdd = document.getElementById("addtohtml1");
 		for (var xAxis = 0; xAxis < 10; xAxis++) {
 			for (var yAxis = 0; yAxis < 22; yAxis++) { // xAxis === x , yAxis === y
-				console.log("loop");
+				// console.log("loop");
 				
 				var toAddChild = document.createElement("div" + xAxis); //creates all the divs, givs classes and IDs
 				toAddChild.id = "cell x"+ xAxis + ", y" + yAxis;
 				toAddChild.className = "empty";
-				// console.dir(document.getElementById("e.g.").style.height);
-				// var cellSize = document.getElementById("e.g.").style.height;
+
+				var cellSize = document.getElementById("example");
+				var cellSize1 = window.getComputedStyle(cellSize, null).height;
+				// cellSize2 = JSON.stringify(cellSize1);
+				cellSize2 = (JSON.stringify(cellSize1)).slice(1, -3);
+				// console.log(cellSize2);
+				// console.dir(cellSize);
+				console.log(xAxis*cellSize2 + 'px');
+				toAddChild.style.left = (xAxis*cellSize2) + (xAxis*6) + 'px';
+				toAddChild.style.top = (yAxis*cellSize2) + (yAxis*6) + 'px';
+
 				// toAddChild.style.left = xAxis*30 + 'px';
 				// toAddChild.style.top = yAxis*30 + 'px';
-
-				toAddChild.style.left = xAxis*30 + 'px';
-				toAddChild.style.top = yAxis*30 + 'px';
-				// toAddChild.innerHTML = arraySet1[xAxis][yAxis];
 				
-				if (arraySet1[xAxis][yAxis] === 1) { //sets up secondary class (for active cells)
-					// toAddChild.className = "fullCell";
+				// if (arraySet1[xAxis][yAxis] === 1) { //sets up secondary class (for active cells)
+				// 	// toAddChild.className = "fullCell";
 
-				} else if (arraySet1[xAxis][yAxis] === 2){
-					// toAddChild.className = "trial3";
-					// console.log("One made Yellow " + horiz + ", " + vert);
+				// } else if (arraySet1[xAxis][yAxis] === 2){
+				// 	// toAddChild.className = "trial3";
+				// 	// console.log("One made Yellow " + horiz + ", " + vert);
 
-				} else if (arraySet1[xAxis][yAxis] <= -25){
-					// toAddChild.className = "deadCell";
-					// console.log("One made gray " + horiz + ", " + vert);
-				}
+				// } else if (arraySet1[xAxis][yAxis] <= -25){
+				// 	// toAddChild.className = "deadCell";
+				// 	// console.log("One made gray " + horiz + ", " + vert);
+				// }
 
 				toAdd.appendChild(toAddChild); //applies it all!
 			}
 		}
 	}
+}
+
+var cellSpacing = function() {
+
 }
 
 var theBeat = function() {
