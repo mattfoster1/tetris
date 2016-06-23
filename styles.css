@@ -104,11 +104,19 @@ body {
 
 .empty {
 	background-color: red;
+	/*background-image: url(images/cell_red.png);*/
+	/*background-size: contain;*/
+	box-shadow: 3px 3px 5px darkgray, inset 0px 0px 12px darkred;
+	border-radius: 5px;
 }
 
 .fullCell {
-	background-color: purple;
+	/*background-color: purple;*/
+	/*box-shadow: 3px 3px 5px darkgray;*/
+	background-image: url(images/cell_purple.png);
 	box-shadow: 3px 3px 5px darkgray;
+	background-size: contain;
+	border-radius: 5px;
 
 }
 
@@ -122,6 +130,10 @@ body {
 
 .deadCell {
 	background-color: gray;
+	background-image: url(images/cell_grey_red.png);
+	box-shadow: 3px 3px 5px darkgray;
+	background-size: contain;
+	border-radius: 5px;
 }
 
 
