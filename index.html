@@ -40,14 +40,28 @@
       <div id="nextPiece"></div>
     </div>
 
-    <div id="scoreBoard">
-      <div id="scoreTit" class="title">Score:</div>
-      <div id="score" class="value">0</div>
+    <div id="cPadCont">
+      <div id="cPad">
+        <button id="leftBtn" class="cPadBtn" onclick="cPadPress('left')"></button>
+        <button id="rtBtn" class="cPadBtn" onclick="cPadPress('right')"></button>
+        <button id="rotBtn" class="cPadBtn" onclick="cPadPress('rot')"></button>
+        <button id="downBtn" class="cPadBtn" onclick="cPadPress('down')"></button>
+      </div>
     </div>
 
-    <div id="levelBoard">
-      <div id="levelTit" class="title">Level:</div>
-      <div id="level" class="value">1</div>
+    <div id="slCont">
+      <div id="scoreBoard">
+        <div id="scoreCont">
+          <div id="scoreTit" class="title">Score:</div>
+          <div id="score" class="value">0</div>
+        </div>
+      </div>
+      <div id="levelBoard">
+        <div id="levelCont">
+          <div id="levelTit" class="title">Level:</div>
+          <div id="level" class="value">1</div>
+        </div>
+      </div>
     </div>
 
   </div>

@@ -359,7 +359,7 @@ var shapeT = function() {
 }
 
 document.onkeydown = function(checkKeyPressed){
-	if (pauseState == false && livePieceOnBoard == 1) { //NEEDS to be reactivated!
+	if (pauseState == false && livePieceOnBoard == 1) {
 
  	    if(checkKeyPressed.keyCode == 68){
 	        savePrevCells();//saves cells of the previous rotation
@@ -385,9 +385,32 @@ document.onkeydown = function(checkKeyPressed){
 	    	}
 	    }
 	}
-	    
-  		// console.log("keypress");
-  		// console.dir(arraySet1[7][21]);
+}
+
+
+var cPadPress = function(cPadKey) {
+	if (pauseState == false && livePieceOnBoard == 1) {
+
+ 	    if(cPadKey == "right"){
+	        savePrevCells();//saves cells of the previous rotation
+	    	wipePrevCells();//wipes cells of the previous rotation
+	        goRight();
+	    } else if (cPadKey == "left"){
+	        savePrevCells();
+	    	wipePrevCells();
+	        goLeft();
+	    } else if (cPadKey == "rot"){
+	    	savePrevCells();
+	    	wipePrevCells();
+	    	CCW();
+	    } else if (cPadKey == "down"){
+	    	if (downval == 0) {
+	    		savePrevCells();
+	    		wipePrevCells();
+	    		down();
+	    	}
+	    }
+	}
 }
 
 var goLeft = function() {
@@ -957,7 +980,7 @@ var showInstr = function() {
 	console.log("3");
 }
 
-var gameover = function() { // needs to be a css feast
+var gameover = function() {
 	
 	var GO_Bgr = document.getElementById("gameOverOverlay");
 	var GO = document.getElementById("gameOver");
