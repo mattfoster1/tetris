@@ -7,8 +7,10 @@ body, html{
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-}
 
+    /*_webView.scalesPageToFit = NO;*/
+	/*_webView.multipleTouchEnabled = NO;*/
+}
 
 @font-face {font-family: SSP-l; src: url('fonts/SourceSansPro-Light.ttf');}
 @font-face {font-family: SSP-r; src: url('fonts/SourceSansPro-Regular.otf');}
@@ -37,8 +39,19 @@ body, html {
 
 body {
 	/*background-color: white;*/
-	background: url("images/bgr2.jpg");
+	/*background: url("images/bgr3_contrast.jpg");*/
+	background: url("images/bgr3.jpg");
 	background-size: contain;
+}
+
+
+button:focus {
+	outline: none;
+}
+
+button:active {
+	opacity: 0.9;
+	background-color: darkblue;
 }
 
 #gridCont {
