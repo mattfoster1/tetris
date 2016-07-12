@@ -137,7 +137,7 @@ var randomShapeGenerator = function() {
 	nextPiecePop();
 };
 
-var nextPiecePop = function() {
+var nextPiecePop = function() {//shows the next piece to appear
 	if (nextPieceShape === "L") {
 		document.getElementById("nextPiece").style.background = "url('images/L_screenshot.png') no-repeat center center";
 	} else if (nextPieceShape === "Z") {
@@ -389,8 +389,13 @@ var goLeft = function() {
 	var c4l = document.getElementById("cell x" + (h4-1) + ", y" + v4);
 
 	// console.log(livePieceOnBoard);
+
 	if (
 		livePieceOnBoard === 1
+		&& c1l
+	 	&& c2l
+	 	&& c3l
+	 	&& c4l
 		&& c1l.className !== "deadCell"
 	 	&& c2l.className !== "deadCell"
 	 	&& c3l.className !== "deadCell"
@@ -427,6 +432,10 @@ var goRight = function() {
 
 	if (
 		livePieceOnBoard === 1
+		&& c1r
+	 	&& c2r
+	 	&& c3r
+	 	&& c4r
 		&& c1r.className !== "deadCell" 
 	 	&& c2r.className !== "deadCell"
 	 	&& c3r.className !== "deadCell"
@@ -582,23 +591,23 @@ var getRotation = function() {//rotation
 		if (livePieceRotation === 1 || livePieceRotation === 3) {
 			// console.log("___Rotation1___");
 			h1 = horiz-2;
-			v1 = vert;
+			v1 = vert-1;
 			h2 = horiz-1;
-			v2 = vert;
+			v2 = vert-1;
 			h3 = horiz;
-			v3 = vert;
+			v3 = vert-1;
 			h4 = horiz+1;
-			v4 = vert;
+			v4 = vert-1;
 		} else if (livePieceRotation === 2 || livePieceRotation === 4) {
 			// console.log("___Rotation2___");
 			h1 = horiz;
-			v1 = vert-1;
+			v1 = vert-2;
 			h2 = horiz;
-			v2 = vert;
+			v2 = vert-1;
 			h3 = horiz;
-			v3 = vert+1;
+			v3 = vert;
 			h4 = horiz;
-			v4 = vert+2;
+			v4 = vert+1;
 		}
 	} else if (livePieceShape === "sq") {
 			h1 = horiz;
@@ -613,43 +622,43 @@ var getRotation = function() {//rotation
 		if (livePieceRotation === 1) {
 			// console.log("___Rotation1___");
 			h1 = horiz-1;
-			v1 = vert;
+			v1 = vert-1;
 			h2 = horiz;
-			v2 = vert;
+			v2 = vert-1;
 			h3 = horiz+1;
-			v3 = vert;
+			v3 = vert-1;
 			h4 = horiz;
-			v4 = vert+1;
+			v4 = vert;
 		} else if (livePieceRotation === 2) {
 			// console.log("___Rotation2___");
 			h1 = horiz;
-			v1 = vert-1;
+			v1 = vert-2;
 			h2 = horiz;
-			v2 = vert;
+			v2 = vert-1;
 			h3 = horiz;
-			v3 = vert+1;
+			v3 = vert;
 			h4 = horiz-1;
-			v4 = vert;
+			v4 = vert-1;
 		} else if (livePieceRotation === 3) {
 			// console.log("___Rotation3___");
 			h1 = horiz-1;
-			v1 = vert;
+			v1 = vert-1;
 			h2 = horiz;
-			v2 = vert;
+			v2 = vert-1;
 			h3 = horiz+1;
-			v3 = vert;
+			v3 = vert-1;
 			h4 = horiz;
-			v4 = vert-1;
+			v4 = vert-2;
 		} else if (livePieceRotation === 4) {
 			// console.log("___Rotation4___");
 			h1 = horiz;
-			v1 = vert-1;
+			v1 = vert-2;
 			h2 = horiz;
-			v2 = vert;
+			v2 = vert-1;
 			h3 = horiz;
-			v3 = vert+1;
+			v3 = vert;
 			h4 = horiz+1;
-			v4 = vert;
+			v4 = vert-1;
 		}
 	}
 };
@@ -902,7 +911,7 @@ var gameover = function() {
 	var n = 0;
 	var gameOverInt = setInterval(function(){
 		n++;
-		console.log(GO.style.marginTop);
+		// console.log(GO.style.marginTop);
 		GO.style.marginTop = n * 10 + "px";
 
 		if (n === 20) {
