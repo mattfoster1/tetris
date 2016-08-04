@@ -697,6 +697,7 @@ var lineCheck = function() {//checks for a continuous horizontal line of blocks 
 			var c1 = document.getElementById("cell x" + xAxis + ", y" + yAxis);
 			if (c1.className === "deadCell") {
 				deadCellCount++
+				//Task: should be marked
 				// console.log("DCC= " + deadCellCount);
 
 				if (deadCellCount >= 10) {//checks that ten cells in a row are 'dead'
@@ -706,40 +707,62 @@ var lineCheck = function() {//checks for a continuous horizontal line of blocks 
 					pause();
 
 						for (x = 0; x < 10; x+=1) {//wipes the line in question
-							var c2 = document.getElementById("cell x" + x + ", y" + y1);
-							c2.className = "empty";//yellow - will be changed to "empty"
+								var c2 = document.getElementById("cell x" + x + ", y" + y1);
+								c2.className = "white";
 						}
+						setTimeout(function(){						
+							for (x = 0; x < 10; x+=1) {//wipes the line in question
+									var c2 = document.getElementById("cell x" + x + ", y" + y1);
+									c2.className = "empty";
+							}
+						}, 75) //end out Timeout
 
-						jsScore++;
-						console.log(jsScore);
-						document.getElementById("score").innerHTML = jsScore;
+						setTimeout(function(){						
+							for (x = 0; x < 10; x+=1) {//wipes the line in question
+									var c2 = document.getElementById("cell x" + x + ", y" + y1);
+									c2.className = "white";
+							}
+						}, 150) //end out Timeout
 
-						beatTime -= (beatTime / 10);//makes the beat 10% faster
-						level++;
-						document.getElementById("level").innerHTML = level;
-						
-						for (x = 9; x >= 0; x-=1) {// sets up placeholder classes (probably not neccessary actually)
-							for (y = y1; y > 0; y-=1) {
-								var c3 = document.getElementById("cell x" + x + ", y" + y);//the cell in question
-								var c3m = document.getElementById("cell x" + x + ", y" + (y-1));//the cell directly underneath c3
-								var c3u = document.getElementById("cell x" + x + ", y" + (y+1));//the cell directly underneath c3
-								
-								if (c3m) {
-									if (c3.className === "deadCell" && c3m.className === "deadCell") {
-										c3.className = "deadCell";
-									}
-									else if (c3.className === "deadCell" && c3m.className === "empty") {
-										c3.className = "empty";
-									}
-									else if (c3.className === "empty" && c3m.className === "deadCell") {
-										c3.className = "deadCell";
-									}
-									else if (c3.className === "empty" && c3m.className === "empty") {
-										c3.className = "empty";
+
+						setTimeout(function(){
+							for (x = 0; x < 10; x+=1) {//wipes the line in question
+								var c2 = document.getElementById("cell x" + x + ", y" + y1);
+								c2.className = "empty";//yellow - will be changed to "empty"
+							}
+
+							jsScore++;
+							console.log(jsScore);
+							document.getElementById("score").innerHTML = jsScore;
+
+							beatTime -= (beatTime / 10);//makes the beat 10% faster
+							level++;
+							document.getElementById("level").innerHTML = level;
+							
+								for (x = 9; x >= 0; x-=1) {// sets up placeholder classes (redundant?)
+									for (y = y1; y > 0; y-=1) {
+										var c3 = document.getElementById("cell x" + x + ", y" + y);//the cell in question
+										var c3m = document.getElementById("cell x" + x + ", y" + (y-1));//the cell directly underneath c3
+										var c3u = document.getElementById("cell x" + x + ", y" + (y+1));//the cell directly underneath c3
+										
+										if (c3m) {
+											if (c3.className === "deadCell" && c3m.className === "deadCell") {
+												c3.className = "deadCell";
+											}
+											else if (c3.className === "deadCell" && c3m.className === "empty") {
+												c3.className = "empty";
+											}
+											else if (c3.className === "empty" && c3m.className === "deadCell") {
+												c3.className = "deadCell";
+											}
+											else if (c3.className === "empty" && c3m.className === "empty") {
+												c3.className = "empty";
+											}
+										}
 									}
 								}
-							}
-						}
+						}, 300) //end out Timeout
+
 					console.log("pause");
 					pause();
 					// }, 5000);

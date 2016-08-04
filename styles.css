@@ -130,6 +130,13 @@ button:focus {
 
 }
 
+.white {
+	background-image: url(images/cell_plain.png);
+	box-shadow: 3px 3px 5px darkgray;
+	background-size: contain;
+	border-radius: 5px;
+}
+
 .trial3 {
 	background-color: yellow;
 }
