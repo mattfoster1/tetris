@@ -460,8 +460,12 @@ var goRight = function() {
 };
 
 var CCW = function() {//rotate counter clockwise
-	if ((livePieceRotation === 1 || livePieceRotation === 3) && (horiz <= 0 || horiz >= 9)) {// will need to be altered for 'shapeI'
-		
+	console.log(livePieceRotation + ", " + horiz);
+	if (
+		(livePieceRotation === 1 || livePieceRotation === 3) && (horiz <= 0 || horiz >= 9) 
+		|| (livePieceShape == "T" && (livePieceRotation == 4 && horiz == 0) || (livePieceRotation == 2 && horiz == 9))
+		|| (livePieceShape == "i" && ((livePieceRotation == 2 || livePieceRotation == 4) && horiz <= 1) || ((livePieceRotation == 2 || livePieceRotation == 4) && horiz >= 9))
+	) { //guards against game-breaking moves
 	} else {
 		if (livePieceRotation === 1){
 			livePieceRotation = 4;
@@ -484,14 +488,11 @@ var CCW = function() {//rotate counter clockwise
 	}
 };
 
-var clockwise = function() {//rotate counter clockwise
-	// var c1cl = document.getElementById("cell x" + h1 + ", y" + v1);//cell #1
-	// var c2cl = document.getElementById("cell x" + h2 + ", y" + v2);
-	// var c3cl = document.getElementById("cell x" + h3 + ", y" + v3);
-	// var c4cl = document.getElementById("cell x" + h4 + ", y" + v4);
-
-	if ((livePieceRotation === 1 || livePieceRotation === 3) && (horiz <= 0 || horiz >= 9)) {// will need to be altered for 'shapeI'
-		
+var clockwise = function() {//rotate clockwise
+	if ((livePieceRotation === 1 || livePieceRotation === 3) && (horiz <= 0 || horiz >= 9) 
+		|| (livePieceShape == "T" && (livePieceRotation == 4 && horiz == 0) || (livePieceRotation == 2 && horiz == 9))
+		|| (livePieceShape == "i" && ((livePieceRotation == 2 || livePieceRotation == 4) && horiz <= 1) || ((livePieceRotation == 2 || livePieceRotation == 4) && horiz >= 9))
+	) {//guards against game-breaking moves
 	} else {
 		if (livePieceRotation === 4){
 			livePieceRotation = 1;
