@@ -707,7 +707,7 @@ var lineCheck = function() {//checks for a continuous horizontal line of blocks 
 					console.log("pause");
 					pause();
 
-						for (x = 0; x < 10; x+=1) {//wipes the line in question
+						for (x = 0; x < 10; x+=1) {//hides the line in question - white background
 								var c2 = document.getElementById("cell x" + x + ", y" + y1);
 								c2.className = "white";
 						}
@@ -716,14 +716,14 @@ var lineCheck = function() {//checks for a continuous horizontal line of blocks 
 									var c2 = document.getElementById("cell x" + x + ", y" + y1);
 									c2.className = "empty";
 							}
-						}, 75) //end out Timeout
+						}, 175) //end out Timeout
 
-						setTimeout(function(){						
-							for (x = 0; x < 10; x+=1) {//wipes the line in question
-									var c2 = document.getElementById("cell x" + x + ", y" + y1);
-									c2.className = "white";
-							}
-						}, 150) //end out Timeout
+						// setTimeout(function(){						
+						// 	for (x = 0; x < 10; x+=1) {//hides the line in question - white background
+						// 			var c2 = document.getElementById("cell x" + x + ", y" + y1);
+						// 			c2.className = "white";
+						// 	}
+						// }, 150) //end out Timeout
 
 
 						setTimeout(function(){
