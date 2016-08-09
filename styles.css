@@ -107,7 +107,6 @@ button:focus {
 	box-shadow: 1px 1px 3px darkgray;
 }
 
-
 .classDD, .classDE, .classED, .classEE {
 	background-color: hotpink;
 }
@@ -178,43 +177,6 @@ button:focus {
 	/*padding-left: 40px;*/
 	margin-top: 20px;
 	text-align: center;
-}
-
-#instrBtn {
-	color: white;
-	width: 110px;
-	height: auto;
-	text-align: center;
-	
-	background-color: darkblue;
-	/*padding: 10px;*/
-	border-radius: 5px;
-	font-family: monty;
-	vertical-align: middle;
-	height: 40px;
-	margin: 40px; 
-
-}
-
-#instructions {
-	flex-direction: column;
-	justify-content: center;
-	height: 300px;
-	/*background-color: goldenrod;*/
-	-webkit-transition: width 0.4s ease;
-	transition: width 0.4s ease;
-	overflow: hidden;
-	white-space: nowrap;
-	margin-top: 5px;
-	color: white;
-}
-
-.iSmall {
-	width: 0px;
-}
-
-.iBig {
-	width: 300px;
 }
 
 #pauseCont {
@@ -407,7 +369,6 @@ button:focus {
 	/*justify-content: center;*/
 	height: auto;
 	width: auto;
-	
 }
 
 #gameOverOverlay {
@@ -420,7 +381,7 @@ button:focus {
 	height: 654px;
 	width: 295px;
 	z-index: 1;
-	opacity: 0;
+	opacity: 1;
 }
 
 #gameOver {
@@ -428,6 +389,37 @@ button:focus {
 	background-size: contain;
 	height: 125px;
 	width: 295px;
+	opacity: 0;
+	display: none;
+}
+
+#instructions {
+	font-family: start;
+	line-height: 150%;
+	text-align: center;
+	color: rgb(230,230,213);
+	width: 85%;
+	font-size: 16px;
+	letter-spacing: 2px;
+	word-spacing: -4px;
+	padding-top: 40px;
+	/*text-shadow: inset 1px 1px 3px darkgray;*/
+	/*-webkit-text-stroke: 0.2px black;*/
+}
+
+#startBtn {
+	position: absolute;
+	display: block;
+	width: 55%;
+	height: 100px;
+	bottom: 130px;
+	margin-left: 22.5%;
+
+	border-radius: 8px;	
+	background-color: rgb(120,222,68);
+	font-size: 20px;
+	font-family: start;
+	line-height: 150%;
 }
 
 #retryBtn {

@@ -62,7 +62,6 @@ var theBeat = function() {
 
 		var boardLimit = 23;
 		if (beat >= boardLimit) {
-			console.log("killa");
 			killPiece();
 		}
 
@@ -92,10 +91,17 @@ var theBeat = function() {
 
 var start = function() {
 	setGridtoZero();
-	interval = setInterval(function(){theBeat();}, beatTime);
 	fillOutGrid();
 	console.log("start");
 };
+
+var gameStart = function() {
+	var GO_Bgr = document.getElementById("gameOverOverlay");
+	GO_Bgr.style.opacity = "0";
+	document.getElementById("startBtn").blur();
+
+	interval = setInterval(function(){theBeat(); console.log(1);}, beatTime);
+}
 
 var pieceGenerator = function() {
 	// console.log("NOTIFICATION: randomShapeGenerator triggered");
@@ -108,7 +114,7 @@ var pieceGenerator = function() {
 	}
 	
 	livePieceShape = nextPieceShape;//move upcoming piece from memory to put on board
-	console.log(nextPieceShape);
+	// console.log(nextPieceShape);
 
 	randomShapeGenerator();
 	// livePieceShape = "i";//PLACEHOLDER 
@@ -117,7 +123,7 @@ var pieceGenerator = function() {
 	livePieceTime = 0;
 	// vert = 4;
 	beat = 0;
-	console.log(nextPieceShape);
+	// console.log(nextPieceShape);
 };
 
 var randomShapeGenerator = function() {
@@ -351,7 +357,6 @@ document.onkeydown = function(checkKeyPressed){
 	}
 };
 
-
 var cPadPress = function(cPadKey) {
 	if (pauseState === false && livePieceOnBoard === 1) {
 
@@ -518,7 +523,7 @@ var clockwise = function() {//rotate clockwise
 var down = function() {
 	downval = 1;//stops interval repeating
 	// clearInterval(interval);
-	downInterval = setInterval(function(){theBeat();}, 50);
+	downInterval = setInterval(function(){theBeat(); console.log("downInterval")}, 50);
 };
 
 var getRotation = function() {//rotation
@@ -689,6 +694,7 @@ var killPiece = function() {
 };
 
 var lineCheck = function() {//checks for a continuous horizontal line of blocks on any part of the board, removed any, moves higher cells down and adds to scoreboard. Also speeds up beat
+	console.log("lineCheck"); //why on Earth does this comment stop the whiteline issue?
 	for (yAxis = 0; yAxis < 22; yAxis+=1) {
 		var deadCellCount = 0;
 
@@ -704,26 +710,21 @@ var lineCheck = function() {//checks for a continuous horizontal line of blocks 
 				if (deadCellCount >= 10) {//checks that ten cells in a row are 'dead'
 					var y1 = yAxis;
 					console.log("wipeLine1");
-					console.log("pause");
+					// console.log("pause");
 					pause();
 
 						for (x = 0; x < 10; x+=1) {//hides the line in question - white background
 								var c2 = document.getElementById("cell x" + x + ", y" + y1);
 								c2.className = "white";
+								console.log("white");
 						}
 						setTimeout(function(){						
 							for (x = 0; x < 10; x+=1) {//wipes the line in question
 									var c2 = document.getElementById("cell x" + x + ", y" + y1);
 									c2.className = "empty";
+									console.log("empty");
 							}
-						}, 175) //end out Timeout
-
-						// setTimeout(function(){						
-						// 	for (x = 0; x < 10; x+=1) {//hides the line in question - white background
-						// 			var c2 = document.getElementById("cell x" + x + ", y" + y1);
-						// 			c2.className = "white";
-						// 	}
-						// }, 150) //end out Timeout
+						}, 175) //end of setTimeout
 
 
 						setTimeout(function(){
@@ -736,7 +737,12 @@ var lineCheck = function() {//checks for a continuous horizontal line of blocks 
 							console.log(jsScore);
 							document.getElementById("score").innerHTML = jsScore;
 
-							beatTime -= (beatTime / 10);//makes the beat 10% faster
+							clearInterval(interval); // pauses and resets "interval" on theBeat()
+							console.log("beatTime1 = " + beatTime);
+							beatTime -= (beatTime / 4);//makes the beat n% faster
+							console.log("beatTime2 = " + beatTime);
+							interval = setInterval(function(){theBeat();}, beatTime);
+
 							level++;
 							document.getElementById("level").innerHTML = level;
 							
@@ -762,9 +768,9 @@ var lineCheck = function() {//checks for a continuous horizontal line of blocks 
 										}
 									}
 								}
-						}, 300) //end out Timeout
+						}, 300) //end of Timeout
 
-					console.log("pause");
+					// console.log("pause");
 					pause();
 					// }, 5000);
 				}// end of wipeLine func
@@ -866,14 +872,14 @@ var bottomChecker = function() {//checks for dead cells or end of board below pi
 	}
 };
 
-var pause = function() {
+var pause = function() { //pauses gameplay
 	if (pauseState === true) {
 		pauseState = false;
+		console.log("unpause");
 	} else if (pauseState === false) {
 		pauseState = true;
+		console.log("pause");
 	}
-
-	console.log("pause");
 };
 
 var wipeCells = function() {// probably not needed any more
@@ -888,50 +894,31 @@ var wipeCells = function() {// probably not needed any more
 	// c4.className = "empty";
 };
 
-var savePrevCells = function() {
+var savePrevCells = function() {//protects cells in case of rotation or sideways movement during downwards movement 
 	pc1 = document.getElementById("cell x" + h1 + ", y" + v1);
 	pc2 = document.getElementById("cell x" + h2 + ", y" + v2);
 	pc3 = document.getElementById("cell x" + h3 + ", y" + v3);
 	pc4 = document.getElementById("cell x" + h4 + ", y" + v4);
 };
 
-var wipePrevCells = function() {
+var wipePrevCells = function() {//protects cells in case of rotation or sideways movement during downwards movement
 	pc1.className = "empty";
 	pc2.className = "empty";
 	pc3.className = "empty";
 	pc4.className = "empty";
 };
 
-var showInstr = function() {
-
-	// 	if (document.getElementById("instructions").style.height === "0px") {
-	// 		document.getElementById("instructions").style.height = "400px";
-	// 		console.log("1");
-	// 	} else if (document.getElementById("instructions").style.display >= "400px") {
-	// 		document.getElementById("instructions").style.display = "0px";
-	// 		console.log("2");
-	// 	}
-
- 	if (document.getElementById("instructions").className === "iSmall") {
-		document.getElementById("instructions").className = "iBig";
-		document.getElementById("instrBtn").innerHTML = "close";
-		console.log("1");
-	} else if (document.getElementById("instructions").className === "iBig") {
-		document.getElementById("instructions").className = "iSmall";
-		document.getElementById("instrBtn").innerHTML = "Instructions";
-		console.log("2");
-	}
-
-
-
-	console.log("3");
-};
-
-var gameover = function() {
+var gameover = function() { //shows gameover overlay
 	
+	document.getElementById("startBtn").style.display = "none";
+	document.getElementById("instructions").style.display = "none";
+
 	var GO_Bgr = document.getElementById("gameOverOverlay");
 	var GO = document.getElementById("gameOver");
 	GO_Bgr.style.opacity = "1";
+	GO.style.display = "block";
+	GO.style.opacity = "1";
+
 	var n = 0;
 	var gameOverInt = setInterval(function(){
 		n++;
@@ -947,6 +934,6 @@ var gameover = function() {
 	console.log("endGame_pause");
 };
 
-var retry = function() {
+var retry = function() {//reloads page for new game
 	location.reload();
 };

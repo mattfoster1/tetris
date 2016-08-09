@@ -14,6 +14,15 @@
       <div id="gameOverCont">
         <div id="gameOverOverlay">
           <div id="gameOver"></div>
+          <div id="instructions">
+            <p>
+              Use<br><br>a and d to move left and right,<br><br>
+              arrow keys to rotate <br><br> 
+              and <br><br>
+              space to speed up
+            </p>
+          </div>
+          <button id="startBtn" onclick="gameStart()">Tap to Start</button>
           <button id="retryBtn" onclick="retry()">retry?</button>
         </div>
       </div>
@@ -25,7 +34,7 @@
 
   <div id="instrCont">
     <button id="instrBtn" onclick="showInstr()">Instructions</button>
-    <div id="instructions" class="iSmall" style=""><p><b>Instructions:</b><br><br>Use <b><br><br>a</b> and <b>d</b> to move left and right,<br><br> <br><br> <b>arrow keys</b> to rotate and <br><br><b>space</b> to speed up</p></div>
+    <div id="instructions" class="iSmall" style=""></div>
   </div>
 
   <div id="pauseCont">
