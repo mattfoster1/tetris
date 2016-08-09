@@ -43,11 +43,19 @@ var fillOutGrid = function() {
 				var toAddChild = document.createElement("div" + xAxis);//creates all the divs, givs classes and IDs
 				toAddChild.id = "cell x"+ xAxis + ", y" + yAxis;
 				toAddChild.className = "empty";
-				var cellSize = document.getElementById("example");
+				var cellSize = document.getElementById("example"); //looks at template for cell size in CSS, uses it to calculate where everything in grid goes
 				var cellSize1 = window.getComputedStyle(cellSize, null).height;
 				var cellSize2 = (JSON.stringify(cellSize1)).slice(1, -3);
-				toAddChild.style.left = (xAxis*cellSize2) + (xAxis*6) + "px";
-				toAddChild.style.top = (yAxis*cellSize2) + (yAxis*6) + "px";
+				
+				if (window.innerWidth > window.innerHeight) {
+					toAddChild.style.left = (xAxis*cellSize2) + (xAxis*6) + "px";
+					toAddChild.style.top = (yAxis*cellSize2) + (yAxis*6) + "px";
+				} else {
+					toAddChild.style.left = (xAxis*cellSize2) + (xAxis*8) + "px";
+					toAddChild.style.top = (yAxis*cellSize2) + (yAxis*8) + "px";
+				}
+
+
 				toAdd.appendChild(toAddChild);//applies it all!
 			}
 		}

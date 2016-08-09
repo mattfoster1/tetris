@@ -1,6 +1,6 @@
 #main_grid, #addtohtml1, #instructions, #gridCont, 
 #instrCont, #scoreboardCont, #nextPieceCont, #scoreBoard,
-#grid, #levelBoard, .title, #gameOverOverlay, #scoreCont, #levelCont, #slCont, #cPadCont, #rotBtnCont, #btnCont,
+#grid, #levelBoard, .title, #gameOverOverlay, #scoreCont, #levelCont, #slCont, #cPadCont, #rotBtnCont, #btnCont, 
 body, html{
 	display: -webkit-box;
     display: -moz-box;
@@ -374,6 +374,7 @@ button:focus {
 #gameOverOverlay {
 	position: relative;
 	align-items: center;
+	justify-content: space-around;
 	flex-direction: column;
 	background: rgba(54,23,32,0.7);
 	/*height: 100%;*/
@@ -382,13 +383,16 @@ button:focus {
 	width: 295px;
 	z-index: 1;
 	opacity: 1;
+	box-shadow: 6px 6px 5px white, 3px 3px 5px white;
 }
 
 #gameOver {
+	position: absolute;
+	top: 70px;
 	background: url('images/gameOver.png') no-repeat center;
 	background-size: contain;
 	height: 125px;
-	width: 295px;
+	width: 100%;
 	opacity: 0;
 	display: none;
 }
@@ -402,20 +406,19 @@ button:focus {
 	font-size: 16px;
 	letter-spacing: 2px;
 	word-spacing: -4px;
-	padding-top: 40px;
-	/*text-shadow: inset 1px 1px 3px darkgray;*/
-	/*-webkit-text-stroke: 0.2px black;*/
+}
+
+#instructions p {
+	margin: 0;
 }
 
 #startBtn {
-	position: absolute;
-	display: block;
 	width: 55%;
 	height: 100px;
-	bottom: 130px;
-	margin-left: 22.5%;
+	margin-bottom: 20px;
 
-	border-radius: 8px;	
+	border-radius: 8px;
+	border-color: antiquewhite;	
 	background-color: rgb(120,222,68);
 	font-size: 20px;
 	font-family: start;
@@ -434,6 +437,7 @@ button:focus {
 	background-color: rgb(120,222,68);
 	font-size: 20px;
 	font-family: start;
+	border-color: antiquewhite;
 }
 
 @media screen and (max-height: 900px) { 
@@ -474,6 +478,119 @@ button:focus {
 		height: 18px;
 		width: 18px;
 		box-shadow: 1px 1px 3px darkgray;
+	}
+}
+
+/*mobile*/
+@media screen and (max-width: 1300px) and (min-width: 801px) and (min-height: 1000px) and (orientation: portrait) {
+	
+	#gridCont {
+		height: auto;
+	}
+
+	#gridContBgr {
+		width: 376px;
+		height: 831px;
+	}
+
+	#gameOverOverlay {
+		height: 828px;
+		width: 375px;
+	}
+
+	#gameOver {
+		height: 160px;
+	}
+
+	#retryBtn {
+		width: 75%;
+		height: 150px;
+		margin-left: 12.5%;
+		font-size: 37px;
+		text-shadow: 3px 3px lightgreen;
+	}
+
+	#instructions {
+		width: 95%;
+		font-size: 30px;
+		color: rgb(254,254,233);
+	}
+
+	#startBtn {
+		width: 75%;
+		height: 150px;
+		font-size: 37px;
+		text-shadow: 3px 3px lightgreen;
+	}
+
+	.fullCell, .empty, .deadCell, .trial3, .trial4, .classDD, .classDE, .classED, .classEE, #example {
+		position: absolute;
+		height: 30px;
+		width: 30px;
+		box-shadow: 1px 1px 3px darkgray;
+	}
+
+	#scoreboardCont {
+		width: 490px;
+		margin: 0;
+	}
+
+	#cPadCont {
+		height: 400px;
+		width: 400px;
+	}
+
+	#rotBtnCont {
+		padding-bottom: 30px;
+	}
+
+	#rotBtn, #rtBtn {
+		ms-transform: scale(1.5, 1.5); /* IE 9 */
+    	-webkit-transform: scale(1.5, 15); /* Safari */
+    	-moz-transform: scale(1.5, 1.5); /*firefox*/
+    	transform: scale(1.5, 1.5);
+	}
+
+	#downBtn {
+		ms-transform: rotate(90deg) scale(1.5, 1.5); /* IE 9 */
+    	-webkit-transform: rotate(90deg) scale(1.5, 1.5); /* Safari */
+    	-moz-transform: rotate(90deg) scale(1.5, 1.5); /*firefox*/
+    	transform: rotate(90deg) scale(1.5, 1.5);
+	}
+
+	#leftBtn {
+		ms-transform: rotate(180deg) scale(1.5, 1.5); /* IE 9 */
+    	-webkit-transform: rotate(180deg) scale(1.5, 1.5); /* Safari */
+    	-moz-transform: rotate(180deg) scale(1.5, 1.5); /*firefox*/
+    	transform: rotate(180deg) scale(1.5, 1.5);	
+	}
+
+	#nextPieceCont {
+		width: 350px;
+		height: 350px;
+	}
+
+	#nextPiece {
+		height: 55%;
+		width: 55%;
+		background-size: contain !important;
+	}
+
+	#slCont {
+		height: auto;
+	}
+
+	#scoreBoard, #levelBoard {
+		height: 150px;
+		width: 350px;
+	}
+
+	#slCont .title, #slCont .value {
+		font-size: 90px;
+	}
+
+	.title {
+		font-size: 80px;
 	}
 }
 
