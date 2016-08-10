@@ -48,11 +48,11 @@ var fillOutGrid = function() {
 				var cellSize2 = (JSON.stringify(cellSize1)).slice(1, -3);
 				
 				if (window.innerWidth > window.innerHeight) {
-					toAddChild.style.left = (xAxis*cellSize2) + (xAxis*6) + "px";
-					toAddChild.style.top = (yAxis*cellSize2) + (yAxis*6) + "px";
+					toAddChild.style.left = (xAxis*cellSize2) + (xAxis) + "px";
+					toAddChild.style.top = (yAxis*cellSize2) + (yAxis) + "px";
 				} else {
-					toAddChild.style.left = (xAxis*cellSize2) + (xAxis*8) + "px";
-					toAddChild.style.top = (yAxis*cellSize2) + (yAxis*8) + "px";
+					toAddChild.style.left = (xAxis*cellSize2) + (xAxis*2) + "px";
+					toAddChild.style.top = (yAxis*cellSize2) + (yAxis*2) + "px";
 				}
 
 
@@ -747,7 +747,7 @@ var lineCheck = function() {//checks for a continuous horizontal line of blocks 
 
 							clearInterval(interval); // pauses and resets "interval" on theBeat()
 							console.log("beatTime1 = " + beatTime);
-							beatTime -= (beatTime / 4);//makes the beat n% faster
+							beatTime -= (beatTime / 6);//makes the beat n% faster
 							console.log("beatTime2 = " + beatTime);
 							interval = setInterval(function(){theBeat();}, beatTime);
 

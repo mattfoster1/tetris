@@ -51,6 +51,10 @@ button:focus {
 
 :focus { }
 
+#rotBlocker {
+	display: none;
+}
+
 #gridCont {
 	position: relative;
 	align-items: center;
@@ -80,11 +84,11 @@ button:focus {
 #gridContBgr {
 	width: 295px;
 	height: 655px;
-	background-color: white;
+	/*background-color: white;*/
 	padding: 20px;
-	border-radius: 5px;
-	border: 2px solid rgb(99,99,99);
-	box-shadow: 0px 0px 5px gray;
+	/*border-radius: 5px;*/
+	/*border: 2px solid rgb(99,99,99);*/
+	/*box-shadow: 0px 0px 5px gray;*/
 	margin-bottom: 20px;
 }
 
@@ -102,9 +106,9 @@ button:focus {
 
 .fullCell, .empty, .deadCell, .trial3, .trial4, .classDD, .classDE, .classED, .classEE, #example {
 	position: absolute;
-	height: 24px;
-	width: 24px;
-	box-shadow: 1px 1px 3px darkgray;
+	height: 32px;
+	width: 32px;
+	/*box-shadow: 1px 1px 3px darkgray;*/
 }
 
 .classDD, .classDE, .classED, .classEE {
@@ -112,26 +116,26 @@ button:focus {
 }
 
 .empty {
-	background-color: red;
+	background-color: rgb(212,212,212);
 	/*background-image: url(images/cell_red.png);*/
 	/*background-size: contain;*/
-	box-shadow: 3px 3px 5px darkgray, inset 0px 0px 12px darkred;
-	border-radius: 5px;
+	/*box-shadow: 3px 3px 5px darkgray, inset 0px 0px 12px darkred;*/
+	border-radius: 1px;
 }
 
 .fullCell {
 	/*background-color: purple;*/
 	/*box-shadow: 3px 3px 5px darkgray;*/
 	background-image: url(images/cell_purple.png);
-	box-shadow: 3px 3px 5px darkgray;
+	/*box-shadow: 3px 3px 5px darkgray;*/
 	background-size: contain;
-	border-radius: 5px;
+	border-radius: 1px;
 
 }
 
 .white {
 	background-image: url(images/cell_plain.png);
-	box-shadow: 3px 3px 5px darkgray;
+	/*box-shadow: 3px 3px 5px darkgray;*/
 	background-size: contain;
 	border-radius: 5px;
 }
@@ -147,9 +151,9 @@ button:focus {
 .deadCell {
 	background-color: gray;
 	background-image: url(images/cell_grey_red.png);
-	box-shadow: 3px 3px 5px darkgray;
+	/*box-shadow: 3px 3px 5px darkgray;*/
 	background-size: contain;
-	border-radius: 5px;
+	/*border-radius: 5px;*/
 }
 
 
@@ -379,11 +383,11 @@ button:focus {
 	background: rgba(54,23,32,0.7);
 	/*height: 100%;*/
 	/*width: 100%;*/
-	height: 654px;
-	width: 295px;
+	height: 725px;
+	width: 329px;
 	z-index: 1;
 	opacity: 1;
-	box-shadow: 6px 6px 5px white, 3px 3px 5px white;
+	/*box-shadow: 6px 6px 5px white, 3px 3px 5px white;*/
 }
 
 #gameOver {
@@ -477,25 +481,32 @@ button:focus {
 		/*background-color: green !important;*/
 		height: 18px;
 		width: 18px;
-		box-shadow: 1px 1px 3px darkgray;
+		/*box-shadow: 1px 1px 3px darkgray;*/
 	}
 }
 
 /*mobile*/
 @media screen and (max-width: 1300px) and (min-width: 801px) and (min-height: 1000px) and (orientation: portrait) {
 	
+	body, html {
+		justify-content: space-around;
+	}
+
 	#gridCont {
 		height: auto;
+		margin-left: 0px;
+		width: 425px;
+		padding: 0px;
 	}
 
 	#gridContBgr {
-		width: 376px;
+		width: 423px;
 		height: 831px;
 	}
 
 	#gameOverOverlay {
-		height: 828px;
-		width: 375px;
+		height: 925px;
+		width: 419px;
 	}
 
 	#gameOver {
@@ -526,9 +537,17 @@ button:focus {
 
 	.fullCell, .empty, .deadCell, .trial3, .trial4, .classDD, .classDE, .classED, .classEE, #example {
 		position: absolute;
-		height: 30px;
-		width: 30px;
-		box-shadow: 1px 1px 3px darkgray;
+		height: 40px;
+		width: 40px;
+		/*box-shadow: 1px 1px 3px darkgray;*/
+	}
+
+	.fullCell {
+		box-shadow: 0 0 5px purple;
+	}
+
+	.empty {
+		border-radius: 2px;
 	}
 
 	#scoreboardCont {
@@ -581,6 +600,10 @@ button:focus {
 		height: auto;
 	}
 
+	#scoreboardCont {
+		width: 450px;
+	}
+
 	#scoreBoard, #levelBoard {
 		height: 150px;
 		width: 350px;
@@ -595,12 +618,24 @@ button:focus {
 	}
 }
 
-@supports (overflow:-webkit-marquee) and (justify-content:inherit) 
-{
+@supports (overflow:-webkit-marquee) and (justify-content:inherit) {
 
   body {
      overflow: hidden;
      /*background-color: red;*/
   }
 
+}
+
+/*mobile landscape (for blocker)*/
+@media only screen and (min-device-height: 320px) and (max-device-height: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+
+	#rotBlocker {
+		position: absolute;
+		display: block;
+		width: 100%;
+		height: 100%;
+		background-color: rgb(213,213,213);
+		z-index: 3;
+	}
 }
