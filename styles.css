@@ -444,7 +444,8 @@ button:focus {
 	border-color: antiquewhite;
 }
 
-@media screen and (max-height: 900px) { 
+/*screens smaller than 900px*/
+@media screen and (max-height: 850px) { 
 	#gridCont {
 		height: 650px;
 		padding: 0px;
@@ -462,8 +463,9 @@ button:focus {
 	}
 
 	#gameOverOverlay {
-		height: 523px;
+		height: 519px;
 		width: 235px;
+		/*border: 10px solid blue;*/
 	}
 
 	#gameOver {
@@ -479,8 +481,8 @@ button:focus {
 	.fullCell, .empty, .deadCell, .trial3, .trial4, .classDD, .classDE, .classED, .classEE, #example {
 		position: absolute;
 		/*background-color: green !important;*/
-		height: 18px;
-		width: 18px;
+		height: 22.5px;
+		width: 22.5px;
 		/*box-shadow: 1px 1px 3px darkgray;*/
 	}
 }

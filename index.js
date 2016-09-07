@@ -49,10 +49,12 @@ var fillOutGrid = function() {
 				
 				if (window.innerWidth > window.innerHeight) {
 					toAddChild.style.left = (xAxis*cellSize2) + (xAxis) + "px";
-					toAddChild.style.top = (yAxis*cellSize2) + (yAxis) + "px";
+					toAddChild.style.top = (yAxis*cellSize2) + (yAxis) +  "px";
+
 				} else {
 					toAddChild.style.left = (xAxis*cellSize2) + (xAxis*2) + "px";
 					toAddChild.style.top = (yAxis*cellSize2) + (yAxis*2) + "px";
+					
 				}
 
 
